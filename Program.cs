@@ -25,6 +25,7 @@ namespace BookShoppingNeu
             prog.ShowData();
             prog.DataEingeben();
             // prog.Createdata();
+             Console.WriteLine("Test");
 
 
 
@@ -129,6 +130,7 @@ namespace BookShoppingNeu
                 string passwort = Console.ReadLine();
                 prog.DatenPruefen(email, benutzer, passwort);
                 // prüfen wir, ob die Daten richtig sind
+           
 
             }
 
