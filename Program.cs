@@ -25,7 +25,7 @@ namespace BookShoppingNeu
             prog.ShowData();
             prog.DataEingeben();
             // prog.Createdata();
-             Console.WriteLine("Test");
+           
 
 
 
@@ -137,7 +137,6 @@ namespace BookShoppingNeu
         }
         public void DateiAuslesen()
         {
-            string cat, form;
             
             //int hilfer;
             using (var db = new BookshoppingContext())
