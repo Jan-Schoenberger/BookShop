@@ -16,9 +16,9 @@ namespace BookShoppingNeu
         public string Price { get; set; }
         
 
-        public Person PersonK { get; set; }
-        public Format FormatK { get; set; }
-        public Katagorie KatagorieK { get; set; }
+        public Person Person { get; set; }
+        public Format Format { get; set; }
+        public Katagorie Katagorie { get; set; }
         
         //public override string ToString()
         //{
