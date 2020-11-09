@@ -17,6 +17,8 @@ namespace BookShoppingNeu
         public int counter;
         public string cate;
         public string forma;
+        public string meinKat;
+        public string meinFor;
         private string author, title, ean, publisher, date, price;
         private static void Main()
         {
@@ -43,11 +45,16 @@ namespace BookShoppingNeu
                 Console.WriteLine("\n----- Anzahl der Mitglieder -----");
 
                 Console.WriteLine($" - {db.Persons.Count()} Mitglieder");
-                Console.WriteLine("--------------------------------");
+                Console.WriteLine("-----------------------------------");
                 Console.WriteLine();
-                Console.WriteLine("\n----- Anzahl der Buecher -----");
+                Console.WriteLine("\n------- Anzahl der Buecher -------");
                 Console.WriteLine($" - {db.Buescher.Count()} Buecher in unsere Bibliothek");
-                Console.WriteLine("--------------------------------");
+                Console.WriteLine("------------------------------------");
+                Console.WriteLine();
+
+                Console.WriteLine("\n------- Anzahl der Category -------");
+                Console.WriteLine($" - {db.Catags.Count()} Category in unsere Bibliothek");
+                Console.WriteLine("------------------------------------");
                 Console.WriteLine();
 
 
@@ -215,6 +222,7 @@ namespace BookShoppingNeu
                     else
                     {
                         BuchTabelleAusfuelen(line);
+                        break;
                     }
                     //foreach (string s in zerlegendeLine2)
                     //{
@@ -719,24 +727,55 @@ namespace BookShoppingNeu
             }
         }
                 
-         public void BuchBibliothekZeigen()
+        public void BuchBibliothekZeigen()
         {
             Console.Write("Wählen Sie eine Kategorie aus ?");
-            int kID = KategorieZeigen();
+            string kART = KategorieZeigen();
             Console.Write("Wählen Sie eine Format aus ?");
-            int fID = FormatZeigen(kID);
+            string fART = FormatZeigen();
 
+            using (var db = new BookshoppingContext())
+            {
+                //var buch = db.Buescher
+                //           .Where(b => b.Katagorie.KatagorieId == kID);
+                //var buch = from b in db.Buescher
+                //           where b.Katagorie.KatagorieId == kID && b.Format.FormatId == fID
+                //           select b;
+                //foreach(var s in buch)
+                //{
 
+                //    Console.WriteLine(s);
+
+                //}
+                var buch = from b in db.Buescher
+                           where b.KatagorieArt == kART && b.FormatArt == fART
+                                   select new
+                                   {
+                                       id = b.BuchID,
+                                       auth = b.Author,
+                                       pri = b.Price,
+                                       dat = b.Price,
+                                       pu = b.Publisher,
+                                       tit = b.Publisher,
+
+                                   };
+                foreach (var s in buch)
+                {
+                    Console.WriteLine(s);
+                }
+
+            }
 
         }
-        public int FormatZeigen(int KatID)
+        public string FormatZeigen()
         {
             int antwort;
+          
 
             using (var db = new BookshoppingContext())
             {
                
-                antwort = Convert.ToInt32(Console.ReadLine());
+                
                 var form = from f in db.Formats
                             select new
                             {
@@ -751,18 +790,39 @@ namespace BookShoppingNeu
 
             }
 
+            antwort = Convert.ToInt32(Console.ReadLine());
 
-
-
-            return antwort;
-        }
-        public int KategorieZeigen()
-        {
-            int antwort;
             using (var db = new BookshoppingContext())
             {
-              
-                antwort = Convert.ToInt32(Console.ReadLine());
+                var form = from f in db.Formats
+                          where f.FormatId == antwort
+                          select new
+                          {
+                              fart = f.FormatArt
+                          };
+                foreach (var s in form)
+                {
+                    meinFor = s.fart;
+                }
+
+
+            }
+
+
+            return meinFor;
+        }
+        public string KategorieZeigen()
+        {
+            
+            int antwort = 1;
+            using (var db = new BookshoppingContext())
+            {
+
+                var kat = db.Catags
+                     .OrderBy(b => b.KatagorieId)
+                     .First();
+
+
                 var kateg = from k in db.Catags
                             select new
                             {
@@ -776,7 +836,25 @@ namespace BookShoppingNeu
                 }
 
             }
-            return antwort;
+            antwort = Convert.ToInt32(Console.ReadLine());
+
+            using (var db = new BookshoppingContext())
+            {
+                var kat = from k in db.Catags
+                          where k.KatagorieId == antwort
+                          select new
+                          {
+                              kart = k.KatagorieArt
+                          };
+                foreach (var s in kat)
+                {
+                    meinKat = s.kart;
+                }
+
+
+            }
+
+            return meinKat;
         }
        
         public class DbUpdateException : Exception { }
