@@ -857,6 +857,74 @@ namespace BookShoppingNeu
             return meinKat;
         }
        
+        public void BuchKaufen(int Buchnummer, string antwort2)
+        {
+            using (var db = new BookshoppingContext())
+            {
+                var Buch = from b in db.Buescher
+                           where b.BuchID == Buchnummer
+                           select new
+                           {
+                               BuchTitle = b.Title,
+                               BuchPrice = b.Price
+                           };
+
+                foreach(var s in Buch)
+                { if (antwort2 == "k")
+                    {
+                        db.Add(new History
+                        {
+                            BuchKaufen = s.BuchTitle
+                        });
+                        db.SaveChanges();
+                        Console.WriteLine();
+                        Console.WriteLine("Der Buch " + s.BuchTitle + "kostet " + s.BuchPrice + "Wird in deinem Warenkrob hinzufügt " );
+                        Console.Write("Wenn Sie deinen Warenkrob sehen möchten,drücken Sie /wk");
+                        string antwort = Console.ReadLine();
+                        HistoryZeigen(antwort);
+                    } else if (antwort2 == "f")
+                    {
+                        db.Add(new History
+                        {
+                            MoechteKaufen = s.BuchTitle
+
+                        });
+                        db.SaveChanges();
+                        Console.WriteLine();
+                        Console.WriteLine("Der Buch " + s.BuchTitle + "kostet " + s.BuchPrice + "Wird in deiner Wunschliste hinzufügt ");
+                        Console.Write("Wenn Sie deine Wunschliste sehen möchten,drücken Sie /wl");
+                        string antwort = Console.ReadLine();
+                        HistoryZeigen(antwort);
+                    } else
+                    {
+                        Console.WriteLine("Versuchen Sie noch einmal ");
+                        BuchBibliothekZeigen();
+
+                    }
+                    
+                }
+
+            }
+
+        }
+        public void HistoryZeigen(string antwort)
+        {
+            using (var db = new BookshoppingContext())
+            {
+                if (antwort == "wk")
+                {
+                    var Wark = from w in db.Histories
+                               select new
+                               {
+                                   Title = w.BuchKaufen
+                               };
+                    foreach (var s in Wark)
+                    {
+                        Console.WriteLine(s);
+                    }
+                } // hie nur Wuschliste zeigen 
+            }
+        }
         public class DbUpdateException : Exception { }
 
     }

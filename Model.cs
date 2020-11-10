@@ -25,6 +25,7 @@ namespace BookShoppingNeu
         public DbSet<Buch> Buescher { get; set; }
         public DbSet<Katagorie> Catags { get; set; }
         public DbSet<Format> Formats { get; set; }
+         public DbSet<History> Histories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
