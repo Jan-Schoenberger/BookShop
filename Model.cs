@@ -22,8 +22,8 @@ namespace BookShoppingNeu
 
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
         public DbSet<Person> Persons { get; set; }
-        public DbSet<Buch> Buescher { get; set; }
-        public DbSet<Katagorie> Catags { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Catagory> Categories { get; set; }
         public DbSet<Format> Formats { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

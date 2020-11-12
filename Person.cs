@@ -12,11 +12,11 @@ namespace BookShoppingNeu
        
         public int PersonId { get; set; }
         public string PersonGender { get; set; }
-        public string PersonName { get; set; }
-        public string PersonVorname { get; set; }
-        public string PersonStraße { get; set; }
+        public string PersonLastName { get; set; }
+        public string PersonFirstname { get; set; }
+        public string PersonStreet { get; set; }
         public string PersonPLZ { get; set; }
-        public string PersonStadt { get; set; }
+        public string PersonCity { get; set; }
         public string PersonEmail { get; set; }
         public string PersonUser { get; set; }
         public string PersonPasswort { get; set; }
@@ -24,7 +24,7 @@ namespace BookShoppingNeu
        
     
        
-        public List<Buch> buecher { get; set; }
+        // public List<Buch> buecher { get; set; }
 
 
 
