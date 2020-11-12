@@ -16,7 +16,11 @@ namespace BookShoppingNeu
         public int help;
         public int count;
         public string cate;
-        public string form;
+        public string format;
+        public string myCategory;
+        public string myFormat;
+
+        
         private string author, title, ean, publisher, date, price;
         private static void Main()
         {
@@ -25,6 +29,7 @@ namespace BookShoppingNeu
             ShowData();
             DataInput();
             // prog.Createdata();
+           
 
 
 
@@ -42,11 +47,16 @@ namespace BookShoppingNeu
                 Console.WriteLine("\n----- Anzahl der Mitglieder -----");
 
                 Console.WriteLine($" - {db.Persons.Count()} Mitglieder");
-                Console.WriteLine("--------------------------------");
+                Console.WriteLine("-----------------------------------");
                 Console.WriteLine();
-                Console.WriteLine("\n----- Anzahl der Buecher -----");
+                Console.WriteLine("\n------- Anzahl der Buecher -------");
                 Console.WriteLine($" - {db.Buescher.Count()} Buecher in unsere Bibliothek");
-                Console.WriteLine("--------------------------------");
+                Console.WriteLine("------------------------------------");
+                Console.WriteLine();
+
+                Console.WriteLine("\n------- Anzahl der Category -------");
+                Console.WriteLine($" - {db.Catags.Count()} Category in unsere Bibliothek");
+                Console.WriteLine("------------------------------------");
                 Console.WriteLine();
 
 
@@ -129,6 +139,7 @@ namespace BookShoppingNeu
                 string passwort = Console.ReadLine();
                 prog.DatenPruefen(email, benutzer, passwort);
                 // prüfen wir, ob die Daten richtig sind
+           
 
             }
 
@@ -136,6 +147,7 @@ namespace BookShoppingNeu
         public void ReadFile()
         {
             // string cat, form;
+
             
             //int hilfer; //  >> Heißt Helfer.
             using (var db = new BookshoppingContext())
@@ -216,6 +228,7 @@ namespace BookShoppingNeu
                     else
                     {
                         BuchTabelleAusfuelen(line);
+                        break;
                     }
                     //foreach (string s in zerlegendeLine2)
                     //{
@@ -466,7 +479,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 0},
+                                    // Format = {FormatId = 3}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -479,7 +494,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 9},
+                                    // Format = {FormatId = 3}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -492,7 +509,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 0},
+                                    // Format = {FormatId = 4}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -505,7 +524,10 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 9},
+                                    // Format = {FormatId = 4}
+                                    
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -518,7 +540,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 9},
+                                    // Format = {FormatId = 5}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -531,7 +555,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 9},
+                                    // Format = {FormatId = 0}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -544,7 +570,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 0},
+                                    // Format = {FormatId = 1}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -557,7 +585,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 0},
+                                    // Format = {FormatId = 6}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -570,7 +600,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 1},
+                                    // Format = {FormatId = 9}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -583,7 +615,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 0},
+                                    // Format = {FormatId = 1}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -596,7 +630,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 5},
+                                    // Format = {FormatId = 1}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -609,7 +645,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 10},
+                                    // Format = {FormatId = 2}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -622,7 +660,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 11},
+                                    // Format = {FormatId = 2}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -635,7 +675,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 2},
+                                    // Format = {FormatId = 0}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -648,7 +690,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 11},
+                                    // Format = {FormatId = 2}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -661,7 +705,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 8},
+                                    // Format = {FormatId = 0}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -674,7 +720,9 @@ namespace BookShoppingNeu
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price
+                                    Price = price,
+                                    // Katagorie = {KatagorieId = 12},
+                                    // Format = {FormatId = 0}
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -685,7 +733,204 @@ namespace BookShoppingNeu
             }
         }
                 
-        
+        public void BuchBibliothekZeigen()
+        {
+            Console.Write("Wählen Sie eine Kategorie aus ?");
+            string kART = KategorieZeigen();
+            Console.Write("Wählen Sie eine Format aus ?");
+            string fART = FormatZeigen();
+
+            using (var db = new BookshoppingContext())
+            {
+                //var buch = db.Buescher
+                //           .Where(b => b.Katagorie.KatagorieId == kID);
+                //var buch = from b in db.Buescher
+                //           where b.Katagorie.KatagorieId == kID && b.Format.FormatId == fID
+                //           select b;
+                //foreach(var s in buch)
+                //{
+
+                //    Console.WriteLine(s);
+
+                //}
+                var buch = from b in db.Buescher
+                           where b.KatagorieArt == kART && b.FormatArt == fART
+                                   select new
+                                   {
+                                       id = b.BuchID,
+                                       auth = b.Author,
+                                       pri = b.Price,
+                                       dat = b.Price,
+                                       pu = b.Publisher,
+                                       tit = b.Publisher,
+
+                                   };
+                foreach (var s in buch)
+                {
+                    Console.WriteLine(s);
+                }
+
+            }
+
+        }
+        public string FormatZeigen()
+        {
+            int antwort;
+          
+
+            using (var db = new BookshoppingContext())
+            {
+               
+                
+                var form = from f in db.Formats
+                            select new
+                            {
+                                Number = f.FormatId,
+                                Format = f.FormatArt
+                            };
+                foreach (var s in form)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(s.Number + "\t" + s.Format);
+                }
+
+            }
+
+            antwort = Convert.ToInt32(Console.ReadLine());
+
+            using (var db = new BookshoppingContext())
+            {
+                var form = from f in db.Formats
+                          where f.FormatId == antwort
+                          select new
+                          {
+                              fart = f.FormatArt
+                          };
+                foreach (var s in form)
+                {
+                    meinFor = s.fart;
+                }
+
+
+            }
+
+
+            return meinFor;
+        }
+        public string KategorieZeigen()
+        {
+            
+            int antwort = 1;
+            using (var db = new BookshoppingContext())
+            {
+
+                var kat = db.Catags
+                     .OrderBy(b => b.KatagorieId)
+                     .First();
+
+
+                var kateg = from k in db.Catags
+                            select new
+                            {
+                                Number = k.KatagorieId,
+                                Categorie = k.KatagorieArt
+                            };
+                foreach (var s in kateg)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(s.Number + "\t" + s.Categorie);
+                }
+
+            }
+            antwort = Convert.ToInt32(Console.ReadLine());
+
+            using (var db = new BookshoppingContext())
+            {
+                var kat = from k in db.Catags
+                          where k.KatagorieId == antwort
+                          select new
+                          {
+                              kart = k.KatagorieArt
+                          };
+                foreach (var s in kat)
+                {
+                    meinKat = s.kart;
+                }
+
+
+            }
+
+            return meinKat;
+        }
+       
+        public void BuchKaufen(int Buchnummer, string antwort2)
+        {
+            using (var db = new BookshoppingContext())
+            {
+                var Buch = from b in db.Buescher
+                           where b.BuchID == Buchnummer
+                           select new
+                           {
+                               BuchTitle = b.Title,
+                               BuchPrice = b.Price
+                           };
+
+                foreach(var s in Buch)
+                { if (antwort2 == "k")
+                    {
+                        db.Add(new History
+                        {
+                            BuchKaufen = s.BuchTitle
+                        });
+                        db.SaveChanges();
+                        Console.WriteLine();
+                        Console.WriteLine("Der Buch " + s.BuchTitle + "kostet " + s.BuchPrice + "Wird in deinem Warenkrob hinzufügt " );
+                        Console.Write("Wenn Sie deinen Warenkrob sehen möchten,drücken Sie /wk");
+                        string antwort = Console.ReadLine();
+                        HistoryZeigen(antwort);
+                    } else if (antwort2 == "f")
+                    {
+                        db.Add(new History
+                        {
+                            MoechteKaufen = s.BuchTitle
+
+                        });
+                        db.SaveChanges();
+                        Console.WriteLine();
+                        Console.WriteLine("Der Buch " + s.BuchTitle + "kostet " + s.BuchPrice + "Wird in deiner Wunschliste hinzufügt ");
+                        Console.Write("Wenn Sie deine Wunschliste sehen möchten,drücken Sie /wl");
+                        string antwort = Console.ReadLine();
+                        HistoryZeigen(antwort);
+                    } else
+                    {
+                        Console.WriteLine("Versuchen Sie noch einmal ");
+                        BuchBibliothekZeigen();
+
+                    }
+                    
+                }
+
+            }
+
+        }
+        public void HistoryZeigen(string antwort)
+        {
+            using (var db = new BookshoppingContext())
+            {
+                if (antwort == "wk")
+                {
+                    var Wark = from w in db.Histories
+                               select new
+                               {
+                                   Title = w.BuchKaufen
+                               };
+                    foreach (var s in Wark)
+                    {
+                        Console.WriteLine(s);
+                    }
+                } // hie nur Wuschliste zeigen 
+            }
+        }
         public class DbUpdateException : Exception { }
 
     }

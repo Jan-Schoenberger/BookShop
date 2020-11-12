@@ -16,9 +16,12 @@ namespace BookShoppingNeu
         public string Price { get; set; }
         
 
-        public Person PersonK { get; set; }
-        public Format FormatK { get; set; }
-        public Katagorie KatagorieK { get; set; }
+
+        public virtual Person Person { get;  set; }
+        public string FormatArt { get; set; }
+        public virtual Format Format { get; set; }
+        public string KatagorieArt { get; set; }
+        public virtual Katagorie Katagorie { get; set; }
         
         //public override string ToString()
         //{
@@ -26,6 +29,6 @@ namespace BookShoppingNeu
         //           "Buch EAN :" + EAN + "Buch Publisher :" + Publisher + "Datum :" + Date +
         //            "Price :" + Price;
         //}
-    }
+    
 }
 

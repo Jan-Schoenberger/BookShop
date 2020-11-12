@@ -25,6 +25,7 @@ namespace BookShoppingNeu
         public DbSet<Book> Books { get; set; }
         public DbSet<Catagory> Categories { get; set; }
         public DbSet<Format> Formats { get; set; }
+         public DbSet<History> Histories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
@@ -35,5 +36,6 @@ namespace BookShoppingNeu
 
 
     }
+
 }
 
