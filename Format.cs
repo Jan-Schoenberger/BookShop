@@ -7,7 +7,7 @@ namespace BookShoppingNeu
     {
        
         public int FormatId { get; set; }
-        public string FormatArt { get; set; }
+        public string FormatType { get; set; }
        
         //[ForeignKey("BuchID")]
         //public int BuchID { get; set; }

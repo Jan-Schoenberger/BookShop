@@ -12,27 +12,29 @@ namespace BookShoppingNeu
 {
     class Program
     {
-        public int pruf;
-        public int hilf;
-        public int counter;
+        public int check;
+        public int help;
+        public int count;
         public string cate;
-        public string forma;
-        public string meinKat;
-        public string meinFor;
+        public string format;
+        public string myCategory;
+        public string myFormat;
+
+        
         private string author, title, ean, publisher, date, price;
         private static void Main()
         {
-            Program prog = new Program();
-            prog.DateiAuslesen();
-            prog.ShowData();
-            prog.DataEingeben();
+            // Program prog = new Program();
+            DateiAuslesen();
+            ShowData();
+            DataInput();
             // prog.Createdata();
            
 
 
 
         }
-        private void Createdata()
+        private void CreateData()
         {
 
 
@@ -73,7 +75,7 @@ namespace BookShoppingNeu
                 */
             }
         }
-        public void DataEingeben()
+        public void DataInput()
         {
             Program prog = new Program();
 
@@ -88,41 +90,41 @@ namespace BookShoppingNeu
             eing.ToLower();
 
             if (eing == "r")
-            {
+            {   
                 Console.WriteLine("-------Registrierung-------");
-                Console.Write("Gender M/F : ");
+                Console.Write(" Eingabe Geschlecht M/F: ");
                 string gender = Console.ReadLine();
 
-                Console.Write("Vorname : ");
-                string vorname = Console.ReadLine();
+                Console.Write("Vorname: ");
+                string firstname = Console.ReadLine();
 
-                Console.Write("Nachname : ");
-                string nachname = Console.ReadLine();
+                Console.Write("Nachname: ");
+                string lastname = Console.ReadLine();
 
-                Console.Write("Straße : ");
-                string straße = Console.ReadLine();
+                Console.Write("Straße: ");
+                string street = Console.ReadLine();
 
-                Console.Write("PLZ : ");
+                Console.Write("PLZ: ");
                 string plz = Console.ReadLine();
 
-                Console.Write("Stadt : ");
-                string stadt = Console.ReadLine();
+                Console.Write("Stadt: ");
+                string city = Console.ReadLine();
 
-                Console.Write("Email : ");
+                Console.Write("Email: ");
                 string email = Console.ReadLine();
 
-                Console.Write("Benutzername : ");
-                string benutzername = Console.ReadLine();
+                Console.Write("Benutzername: ");
+                string username = Console.ReadLine();
 
-                Console.Write("Passwort : ");
+                Console.Write("Passwort: ");
                 string passwort = Console.ReadLine();
 
-                Console.Write("Geburtsdatum : ");
-                string Gdatum = Console.ReadLine();
+                Console.Write("Geburtsdatum: ");
+                string bday = Console.ReadLine();
 
 
                 // fügen wir die neue Mitglieder zu unsere Daten bank ein 
-                prog.NeuPersonhinzufuegen(gender, nachname, vorname, straße, plz, stadt, email, benutzername, passwort, Gdatum);
+                prog.AddNewPerson(gender, lastname, firstname, street, plz, city, email, username, passwort, bday);
 
             }
             else
@@ -142,10 +144,12 @@ namespace BookShoppingNeu
             }
 
         }
-        public void DateiAuslesen()
+        public void ReadFile()
         {
+            // string cat, form;
+
             
-            //int hilfer;
+            //int hilfer; //  >> Heißt Helfer.
             using (var db = new BookshoppingContext())
             {
                 db.Database.EnsureDeleted();
@@ -154,31 +158,33 @@ namespace BookShoppingNeu
                 //List<Person> per;
                 string line;
 
-
-                System.IO.StreamReader file = new System.IO.StreamReader(@"C:\tmp\fake-persons.txt");
-                System.IO.StreamReader file2 = new System.IO.StreamReader(@"C:\tmp\spiegel-bestseller.txt");
+                String FilenamePersons = @"C:\tmp\fake-persons.txt";
+                System.IO.StreamReader FilePerson = new System.IO.StreamReader(FilenamePersons);
+                String FilenameBook = @"C:\tmp\spiegel-bestseller.txt";
+                System.IO.StreamReader FileBook = new System.IO.StreamReader(FilenameBook);
+                
                 while ((line = file.ReadLine()) != null)
                 {
-                    string[] zerlegendeLine = line.Split(",".ToCharArray());
+                    string[] SplitedLine = line.Split(",".ToCharArray());
                     //foreach (string s in zerlegendeLine)
                     //{
                     //    Console.WriteLine(s);
                     //}
-                    for (int i = 1; i < zerlegendeLine.Length; i++)
+                    for (int i = 1; i < SplitedLine.Length; i++)
                     {
                         db.Add(new Person
                         {
                             // PersonId = i,
-                            PersonGender = zerlegendeLine[i],
-                            PersonName = zerlegendeLine[i++],
-                            PersonVorname = zerlegendeLine[i++],
-                            PersonStraße = zerlegendeLine[i++],
-                            PersonPLZ = zerlegendeLine[i++],
-                            PersonStadt = zerlegendeLine[i++],
-                            PersonEmail = zerlegendeLine[i++],
-                            PersonUser = zerlegendeLine[i++],
-                            PersonPasswort = zerlegendeLine[i++],
-                            PersonBirthay = zerlegendeLine[i++]
+                            PersonGender = SplitedLine[i],
+                            PersonName = SplitedLine[i++],
+                            PersonVorname = SplitedLine[i++],
+                            PersonStraße = SplitedLine[i++],
+                            PersonPLZ = SplitedLine[i++],
+                            PersonStadt = SplitedLine[i++],
+                            PersonEmail = SplitedLine[i++],
+                            PersonUser = SplitedLine[i++],
+                            PersonPasswort = SplitedLine[i++],
+                            PersonBirthay = SplitedLine[i++]
 
                         });
                         db.SaveChanges();
@@ -186,28 +192,28 @@ namespace BookShoppingNeu
                         // PS soll ich ein andere daten banl tabelle erstellen um (Person, Bucher) daten zu speichern
                     }
                 }
-                while ((line = file2.ReadLine()) != null)
+                while ((line = FilePerson.ReadLine()) != null)
                 {
                     if (line != "### titles by category and format")
                     {
-                        string[] zerlegendeLine2 = line.Split(":".ToCharArray());
+                        string[] SplitedLine2 = line.Split(":".ToCharArray());
 
-                        for (int i = 0; i < zerlegendeLine2.Length; i++)
+                        for (int i = 0; i < Line2.Length; i++)
                         {
-                            if (zerlegendeLine2[i] == "CATEGORY")
+                            if (SplitedLine2[i] == "CATEGORY")
                             {
                                 db.Add(new Katagorie
                                 {
-                                    KatagorieArt = zerlegendeLine2[1]
+                                    CategoryType = SplitedLine2[1]
 
                                 });
                                 db.SaveChanges();
                             }
-                            else if (zerlegendeLine2[i] == "FORMAT")
+                            else if (SplitedLine2[i] == "FORMAT")
                             {
                                 db.Add(new Format
                                 {
-                                    FormatArt = zerlegendeLine2[1]
+                                    FormatType = SplitedLine2[1]
                                 });
                                 db.SaveChanges();
 
