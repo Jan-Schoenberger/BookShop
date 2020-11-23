@@ -12,29 +12,28 @@ namespace BookShoppingNeu
 {
     class Program
     {
-        public int check;
-        public int help;
-        public int count;
+        public int pruf;
+        public int hilf;
+        public int counter;
         public string cate;
-        public string format;
-        public string myCategory;
-        public string myFormat;
-
-        
+        public string forma;
+        public string meinKat;
+        public string meinFor;
+        public int cnt;
         private string author, title, ean, publisher, date, price;
         private static void Main()
         {
-            // Program prog = new Program();
-            DateiAuslesen();
-            ShowData();
-            DataInput();
+            Program prog = new Program();
+            prog.DateiAuslesen();
+            prog.ShowData();
+            prog.DataEingeben();
             // prog.Createdata();
            
 
 
 
         }
-        private void CreateData()
+        private void Createdata()
         {
 
 
@@ -75,7 +74,7 @@ namespace BookShoppingNeu
                 */
             }
         }
-        public void DataInput()
+        public void DataEingeben()
         {
             Program prog = new Program();
 
@@ -90,41 +89,41 @@ namespace BookShoppingNeu
             eing.ToLower();
 
             if (eing == "r")
-            {   
+            {
                 Console.WriteLine("-------Registrierung-------");
-                Console.Write(" Eingabe Geschlecht M/F: ");
+                Console.Write("Gender M/F : ");
                 string gender = Console.ReadLine();
 
-                Console.Write("Vorname: ");
-                string firstname = Console.ReadLine();
+                Console.Write("Vorname : ");
+                string vorname = Console.ReadLine();
 
-                Console.Write("Nachname: ");
-                string lastname = Console.ReadLine();
+                Console.Write("Nachname : ");
+                string nachname = Console.ReadLine();
 
-                Console.Write("Straße: ");
-                string street = Console.ReadLine();
+                Console.Write("Straße : ");
+                string straße = Console.ReadLine();
 
-                Console.Write("PLZ: ");
+                Console.Write("PLZ : ");
                 string plz = Console.ReadLine();
 
-                Console.Write("Stadt: ");
-                string city = Console.ReadLine();
+                Console.Write("Stadt : ");
+                string stadt = Console.ReadLine();
 
-                Console.Write("Email: ");
+                Console.Write("Email : ");
                 string email = Console.ReadLine();
 
-                Console.Write("Benutzername: ");
-                string username = Console.ReadLine();
+                Console.Write("Benutzername : ");
+                string benutzername = Console.ReadLine();
 
-                Console.Write("Passwort: ");
+                Console.Write("Passwort : ");
                 string passwort = Console.ReadLine();
 
-                Console.Write("Geburtsdatum: ");
-                string bday = Console.ReadLine();
+                Console.Write("Geburtsdatum : ");
+                string Gdatum = Console.ReadLine();
 
 
                 // fügen wir die neue Mitglieder zu unsere Daten bank ein 
-                prog.AddNewPerson(gender, lastname, firstname, street, plz, city, email, username, passwort, bday);
+                prog.NeuPersonhinzufuegen(gender, nachname, vorname, straße, plz, stadt, email, benutzername, passwort, Gdatum);
 
             }
             else
@@ -144,12 +143,10 @@ namespace BookShoppingNeu
             }
 
         }
-        public void ReadFile()
+        public void DateiAuslesen()
         {
-            // string cat, form;
-
             
-            //int hilfer; //  >> Heißt Helfer.
+            //int hilfer;
             using (var db = new BookshoppingContext())
             {
                 db.Database.EnsureDeleted();
@@ -158,33 +155,31 @@ namespace BookShoppingNeu
                 //List<Person> per;
                 string line;
 
-                String FilenamePersons = @"C:\tmp\fake-persons.txt";
-                System.IO.StreamReader FilePerson = new System.IO.StreamReader(FilenamePersons);
-                String FilenameBook = @"C:\tmp\spiegel-bestseller.txt";
-                System.IO.StreamReader FileBook = new System.IO.StreamReader(FilenameBook);
-                
+
+                System.IO.StreamReader file = new System.IO.StreamReader(@"C:\tmp\fake-persons.txt");
+                System.IO.StreamReader file2 = new System.IO.StreamReader(@"C:\tmp\spiegel-bestseller.txt");
                 while ((line = file.ReadLine()) != null)
                 {
-                    string[] SplitedLine = line.Split(",".ToCharArray());
+                    string[] zerlegendeLine = line.Split(",".ToCharArray());
                     //foreach (string s in zerlegendeLine)
                     //{
                     //    Console.WriteLine(s);
                     //}
-                    for (int i = 1; i < SplitedLine.Length; i++)
+                    for (int i = 1; i < zerlegendeLine.Length; i++)
                     {
                         db.Add(new Person
                         {
                             // PersonId = i,
-                            PersonGender = SplitedLine[i],
-                            PersonName = SplitedLine[i++],
-                            PersonVorname = SplitedLine[i++],
-                            PersonStraße = SplitedLine[i++],
-                            PersonPLZ = SplitedLine[i++],
-                            PersonStadt = SplitedLine[i++],
-                            PersonEmail = SplitedLine[i++],
-                            PersonUser = SplitedLine[i++],
-                            PersonPasswort = SplitedLine[i++],
-                            PersonBirthay = SplitedLine[i++]
+                            PersonGender = zerlegendeLine[i],
+                            PersonName = zerlegendeLine[i++],
+                            PersonVorname = zerlegendeLine[i++],
+                            PersonStraße = zerlegendeLine[i++],
+                            PersonPLZ = zerlegendeLine[i++],
+                            PersonStadt = zerlegendeLine[i++],
+                            PersonEmail = zerlegendeLine[i++],
+                            PersonUser = zerlegendeLine[i++],
+                            PersonPasswort = zerlegendeLine[i++],
+                            PersonBirthay = zerlegendeLine[i++]
 
                         });
                         db.SaveChanges();
@@ -192,28 +187,28 @@ namespace BookShoppingNeu
                         // PS soll ich ein andere daten banl tabelle erstellen um (Person, Bucher) daten zu speichern
                     }
                 }
-                while ((line = FilePerson.ReadLine()) != null)
+                while ((line = file2.ReadLine()) != null)
                 {
                     if (line != "### titles by category and format")
                     {
-                        string[] SplitedLine2 = line.Split(":".ToCharArray());
+                        string[] zerlegendeLine2 = line.Split(":".ToCharArray());
 
-                        for (int i = 0; i < Line2.Length; i++)
+                        for (int i = 0; i < zerlegendeLine2.Length; i++)
                         {
-                            if (SplitedLine2[i] == "CATEGORY")
+                            if (zerlegendeLine2[i] == "CATEGORY")
                             {
                                 db.Add(new Katagorie
                                 {
-                                    CategoryType = SplitedLine2[1]
+                                    KatagorieArt = zerlegendeLine2[1]
 
                                 });
                                 db.SaveChanges();
                             }
-                            else if (SplitedLine2[i] == "FORMAT")
+                            else if (zerlegendeLine2[i] == "FORMAT")
                             {
                                 db.Add(new Format
                                 {
-                                    FormatType = SplitedLine2[1]
+                                    FormatArt = zerlegendeLine2[1]
                                 });
                                 db.SaveChanges();
 
@@ -412,12 +407,15 @@ namespace BookShoppingNeu
             }
 
         }
-        public void BuchTabelleAusfuelen(string line)
+ 
+              public void BuchTabelleAusfuelen(string line)
         {
+            Buch buch;
 
             using (var db = new BookshoppingContext())
             {
-                System.IO.StreamReader file2 = new System.IO.StreamReader(@"C:\tmp\spiegel-bestseller.txt");
+
+                System.IO.StreamReader file2 = new System.IO.StreamReader(@"C:\Users\snassar\Desktop\spiegel-bestseller.txt");
                 while ((line = file2.ReadLine()) != null)
                 {
 
@@ -471,8 +469,11 @@ namespace BookShoppingNeu
                     {
                         switch (hilf)
                         {
+
                             case 1:
-                                db.Add(new Buch
+
+
+                                var b = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -480,14 +481,34 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 0},
-                                    // Format = {FormatId = 3}
-                                });
+
+
+                                }
+                               ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
+
                             case 2:
-                                db.Add(new Buch
+
+                                var b1 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -495,14 +516,32 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 9},
-                                    // Format = {FormatId = 3}
-                                });
+
+
+                                };
+
+                                db.Add(b1);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b1).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
+
                             case 3:
-                                db.Add(new Buch
+                                var b3 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -510,14 +549,33 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 0},
-                                    // Format = {FormatId = 4}
-                                });
+
+
+                                }
+                               ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b3);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b3).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
+
                             case 4:
-                                db.Add(new Buch
+                                var b4 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -525,15 +583,32 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 9},
-                                    // Format = {FormatId = 4}
-                                    
-                                });
+
+
+                                }
+                               ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b4);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b4).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
                             case 5:
-                                db.Add(new Buch
+                                var b5 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -541,14 +616,32 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 9},
-                                    // Format = {FormatId = 5}
-                                });
+
+
+                                }
+                               ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b5);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b5).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
                             case 6:
-                                db.Add(new Buch
+                                var b6 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -556,14 +649,32 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 9},
-                                    // Format = {FormatId = 0}
-                                });
+
+
+                                }
+                               ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b6);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b6).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
                             case 7:
-                                db.Add(new Buch
+                                var b7 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -571,14 +682,32 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 0},
-                                    // Format = {FormatId = 1}
-                                });
+
+
+                                }
+                               ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b7);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b7).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
                             case 8:
-                                db.Add(new Buch
+                                var b8 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -586,14 +715,32 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 0},
-                                    // Format = {FormatId = 6}
-                                });
+
+
+                                }
+                               ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b8);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b8).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
                             case 9:
-                                db.Add(new Buch
+                                var b9 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -601,14 +748,32 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 1},
-                                    // Format = {FormatId = 9}
-                                });
+
+
+                                }
+                              ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b9);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b9).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
                             case 10:
-                                db.Add(new Buch
+                                var b10 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -616,14 +781,32 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 0},
-                                    // Format = {FormatId = 1}
-                                });
+
+
+                                }
+                              ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b10);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b10).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
                             case 11:
-                                db.Add(new Buch
+                                var b11 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -631,14 +814,32 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 5},
-                                    // Format = {FormatId = 1}
-                                });
+
+
+                                }
+                              ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b11);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b11).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
                             case 12:
-                                db.Add(new Buch
+                                var b12 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -646,14 +847,32 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 10},
-                                    // Format = {FormatId = 2}
-                                });
+
+
+                                }
+                               ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b12);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b12).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
                             case 13:
-                                db.Add(new Buch
+                                var b13 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -661,14 +880,32 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 11},
-                                    // Format = {FormatId = 2}
-                                });
+
+
+                                }
+                              ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b13);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b13).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
                             case 14:
-                                db.Add(new Buch
+                                var b14 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -676,14 +913,32 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 2},
-                                    // Format = {FormatId = 0}
-                                });
+
+
+                                }
+                                ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b14);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b14).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
                             case 15:
-                                db.Add(new Buch
+                                var b15 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -691,14 +946,32 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 11},
-                                    // Format = {FormatId = 2}
-                                });
+
+
+                                }
+                               ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b15);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b15).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
                             case 16:
-                                db.Add(new Buch
+                                var b16 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -706,14 +979,32 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 8},
-                                    // Format = {FormatId = 0}
-                                });
+
+
+                                }
+                              ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b16);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b16).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
                             case 17:
-                                db.Add(new Buch
+                                var b17 = new Buch
                                 {
                                     Author = author,
                                     Title = title,
@@ -721,18 +1012,38 @@ namespace BookShoppingNeu
                                     Publisher = publisher,
                                     Date = date,
                                     Price = price,
-                                    // Katagorie = {KatagorieId = 12},
-                                    // Format = {FormatId = 0}
-                                });
+
+
+                                }
+                               ;
+                                //db.Entry<Buch>().State = EntityState.Detached;
+                                db.Add(b17);
                                 db.SaveChanges();
+                                cnt = cnt + 1;
+                                if (cnt == 1)
+                                {
+                                    buch = db.Buescher.First();
+                                }
+                                else
+                                {
+                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    buch = db.Buescher.Find(cnt);
+                                    db.Entry<Buch>(b17).State = EntityState.Detached;
+                                }
+
+                                KatagorieFormatIDAusfuellen(cate, forma, buch);
+
                                 author = title = ean = publisher = date = price = null;
+                                buch = null;
                                 break;
                         }
+
+
+
                     }
                 }
             }
-        }
-                
+        }        
         public void BuchBibliothekZeigen()
         {
             Console.Write("Wählen Sie eine Kategorie aus ?");
@@ -771,6 +1082,12 @@ namespace BookShoppingNeu
                 }
 
             }
+                        Console.WriteLine("Wählen Sie ein Buch aus / Nummer des Buchs");
+            int Kaufantwort = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Möchten Sie dieses Buch kaufen k/, oder dieses Buch zum Favorit hinzufügen F/");
+            string antwort2 = Console.ReadLine();
+
+            BuchKaufen(Kaufantwort,antwort2);
 
         }
         public string FormatZeigen()
@@ -928,8 +1245,82 @@ namespace BookShoppingNeu
                     {
                         Console.WriteLine(s);
                     }
-                } // hie nur Wuschliste zeigen 
+                } // hier nur Wuschliste zeigen 
             }
+        }
+
+
+         
+  public void KatagorieFormatIDAusfuellen(string kate, string forma, Buch buch)
+        {
+            
+            using (var db = new BookshoppingContext()) {
+
+                var kat = db.Catags
+                          .Where(k => k.KatagorieArt == kate)
+                          .Select(k => new
+                          {
+                              kart = k.KatagorieArt,
+                              kid = k.Id
+                          });
+
+                var form = db.Formats
+                           .Where(f => f.FormatArt == forma)
+                           .Select(f => new
+                           {
+                               fart = f.FormatArt,
+                               fid = f.Id
+                           });
+
+              //var  buch = db.Buescher
+              //            .OrderBy(b => b.BuchId)
+              //             .FirstOrDefault();
+
+                //using (var db1 = new BookshoppingContext())
+                //{
+                //    buch = db1.Buescher.First();
+                //}
+                foreach (var s in kat)
+                {
+                    buch.Katagorie = new Katagorie
+                    {
+                        KatagorieArt = s.kart,
+                        Id = s.kid
+                    };
+                }
+                foreach (var f in form)
+                {
+
+                    buch.Format = new Format
+                    {
+                        FormatArt = f.fart,
+                        Id = f.fid
+                    };
+
+                }
+
+                //db.Buescher.Add(buch);
+
+           
+               
+                var Atta = db.Attach(buch);
+                    Atta.State = EntityState.Modified;
+                db.Update(buch);
+
+
+                //Entry = null;
+                
+
+               
+
+              
+
+
+
+
+
+
+            } 
         }
         public class DbUpdateException : Exception { }
 
