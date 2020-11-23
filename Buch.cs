@@ -17,11 +17,11 @@ namespace BookShoppingNeu
         
 
 
-        public virtual Person Person { get;  set; }
+        public virtual Person? Person { get;  set; }
         public string FormatArt { get; set; }
-        public virtual Format Format { get; set; }
+        public virtual Format? Format { get; set; }
         public string KatagorieArt { get; set; }
-        public virtual Katagorie Katagorie { get; set; }
+        public virtual Katagorie? Katagorie { get; set; }
         
         //public override string ToString()
         //{
