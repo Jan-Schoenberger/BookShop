@@ -24,7 +24,7 @@ namespace BookShoppingNeu
        
     
        
-        public List<Buch> buecher { get; set; }
+        public List<Book> Books { get; set; }
 
 
 

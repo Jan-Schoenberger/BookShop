@@ -5,20 +5,20 @@ using System.Data;
 namespace BookShoppingNeu
 {
     // Buch Entity 
-    public class Buch
+    public class Book
     {
-        public int BuchID { get; set; }
+        public int BookID { get; set; }
         public string Author { get; set; }
         public string Title { get; set; }
-        public string EAN { get; set; }
+        public long EAN  {get; set; }
         public string Publisher { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         public string Price { get; set; }
-        
+        public string FormatArt{ get; set;}
 
         public Person PersonK { get; set; }
         public Format FormatK { get; set; }
-        public Katagorie KatagorieK { get; set; }
+        public Category CategoryK { get; set; }
         
         //public override string ToString()
         //{

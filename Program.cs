@@ -12,8 +12,8 @@ namespace BookShoppingNeu
 {
     class Program
     {
-        public int pruf;
-        public int hilf;
+        public int check;
+        public int help;
         public int counter;
         public string cate;
         public string forma;
@@ -21,14 +21,14 @@ namespace BookShoppingNeu
         private static void Main()
         {
             Program prog = new Program();
-            prog.DateiAuslesen();
+            prog.ReadData();
             prog.ShowData();
-            prog.DataEingeben();
+            prog.InputData();
             // prog.Createdata();
-
-
-
+        
         }
+
+
         private void Createdata()
         {
 
@@ -45,7 +45,7 @@ namespace BookShoppingNeu
                 Console.WriteLine("--------------------------------");
                 Console.WriteLine();
                 Console.WriteLine("\n----- Anzahl der Buecher -----");
-                Console.WriteLine($" - {db.Buescher.Count()} Buecher in unsere Bibliothek");
+                Console.WriteLine($" - {db.Books.Count()} Buecher in unsere Bibliothek");
                 Console.WriteLine("--------------------------------");
                 Console.WriteLine();
 
@@ -65,7 +65,7 @@ namespace BookShoppingNeu
                 */
             }
         }
-        public void DataEingeben()
+        public void InputData()
         {
             Program prog = new Program();
 
@@ -76,64 +76,64 @@ namespace BookShoppingNeu
             Console.WriteLine();
 
             Console.Write("Registrierung (R), Anmeldung (A)");
-            string eing = Console.ReadLine();
-            eing.ToLower();
+            string input = Console.ReadLine();
+            input.ToLower();
 
-            if (eing == "r")
+            if (input == "R" || input == "r")
             {
                 Console.WriteLine("-------Registrierung-------");
-                Console.Write("Gender M/F : ");
+                Console.Write("Gender M/F: ");
                 string gender = Console.ReadLine();
 
-                Console.Write("Vorname : ");
-                string vorname = Console.ReadLine();
+                Console.Write("Vorname: ");
+                string firstname = Console.ReadLine();
 
-                Console.Write("Nachname : ");
-                string nachname = Console.ReadLine();
+                Console.Write("Nachname: ");
+                string lastname = Console.ReadLine();
 
-                Console.Write("Straße : ");
-                string straße = Console.ReadLine();
+                Console.Write("Straße: ");
+                string steet = Console.ReadLine();
 
-                Console.Write("PLZ : ");
+                Console.Write("PLZ: ");
                 string plz = Console.ReadLine();
 
-                Console.Write("Stadt : ");
-                string stadt = Console.ReadLine();
+                Console.Write("Stadt: ");
+                string city = Console.ReadLine();
 
-                Console.Write("Email : ");
+                Console.Write("Email: ");
                 string email = Console.ReadLine();
 
-                Console.Write("Benutzername : ");
-                string benutzername = Console.ReadLine();
+                Console.Write("Benutzername: ");
+                string username = Console.ReadLine();
 
-                Console.Write("Passwort : ");
-                string passwort = Console.ReadLine();
+                Console.Write("Passwort: ");
+                string password = Console.ReadLine();
 
-                Console.Write("Geburtsdatum : ");
-                string Gdatum = Console.ReadLine();
+                Console.Write("Geburtsdatum: ");
+                string Bday = Console.ReadLine();
 
 
                 // fügen wir die neue Mitglieder zu unsere Daten bank ein 
-                prog.NeuPersonhinzufuegen(gender, nachname, vorname, straße, plz, stadt, email, benutzername, passwort, Gdatum);
+                prog.AddNewPerson(gender, lastname, firstname, steet, plz, city, email, username, password, Bday);
 
             }
             else
             {
                 Console.WriteLine("-------Anmeldung-------");
                 Console.WriteLine();
-                Console.Write("Email : ");
+                Console.Write("Email: ");
                 string email = Console.ReadLine();
-                Console.Write("Benutzername : ");
-                string benutzer = Console.ReadLine();
+                Console.Write("Benutzername: ");
+                string user = Console.ReadLine();
                 Console.Write("Passwort : ");
                 string passwort = Console.ReadLine();
-                prog.DatenPruefen(email, benutzer, passwort);
+                prog.CheckData(email, user, password);
                 // prüfen wir, ob die Daten richtig sind
 
             }
 
         }
-        public void DateiAuslesen()
+        public void ReadData()
         {
             string cat, form;
             
@@ -151,26 +151,26 @@ namespace BookShoppingNeu
                 System.IO.StreamReader file2 = new System.IO.StreamReader(@"C:\tmp\spiegel-bestseller.txt");
                 while ((line = file.ReadLine()) != null)
                 {
-                    string[] zerlegendeLine = line.Split(",".ToCharArray());
+                    string[] splitLine = line.Split(",".ToCharArray());
                     //foreach (string s in zerlegendeLine)
                     //{
                     //    Console.WriteLine(s);
                     //}
-                    for (int i = 1; i < zerlegendeLine.Length; i++)
+                    for (int i = 1; i < splitLine.Length; i++)
                     {
                         db.Add(new Person
                         {
                             // PersonId = i,
-                            PersonGender = zerlegendeLine[i],
-                            PersonName = zerlegendeLine[i++],
-                            PersonVorname = zerlegendeLine[i++],
-                            PersonStraße = zerlegendeLine[i++],
-                            PersonPLZ = zerlegendeLine[i++],
-                            PersonStadt = zerlegendeLine[i++],
-                            PersonEmail = zerlegendeLine[i++],
-                            PersonUser = zerlegendeLine[i++],
-                            PersonPasswort = zerlegendeLine[i++],
-                            PersonBirthay = zerlegendeLine[i++]
+                            PersonGender = splitLine[i],
+                            PersonName = splitLine[i++],
+                            PersonVorname = splitLine[i++],
+                            PersonStraße = splitLine[i++],
+                            PersonPLZ = splitLine[i++],
+                            PersonStadt = splitLine[i++],
+                            PersonEmail = splitLine[i++],
+                            PersonUser = splitLine[i++],
+                            PersonPasswort = splitLine[i++],
+                            PersonBirthay = splitLine[i++]
 
                         });
                         db.SaveChanges();
@@ -182,24 +182,24 @@ namespace BookShoppingNeu
                 {
                     if (line != "### titles by category and format")
                     {
-                        string[] zerlegendeLine2 = line.Split(":".ToCharArray());
+                        string[] splitLine2 = line.Split(":".ToCharArray());
 
-                        for (int i = 0; i < zerlegendeLine2.Length; i++)
+                        for (int i = 0; i < splitLine2.Length; i++)
                         {
-                            if (zerlegendeLine2[i] == "CATEGORY")
+                            if (splitLine2[i] == "CATEGORY")
                             {
-                                db.Add(new Katagorie
+                                db.Add(new Category
                                 {
-                                    KatagorieArt = zerlegendeLine2[1]
+                                    KategorieArt = splitLine2[1]
 
                                 });
                                 db.SaveChanges();
                             }
-                            else if (zerlegendeLine2[i] == "FORMAT")
+                            else if (splitLine2[i] == "FORMAT")
                             {
                                 db.Add(new Format
                                 {
-                                    FormatArt = zerlegendeLine2[1]
+                                    FormatArt =splitLine2[1]
                                 });
                                 db.SaveChanges();
 
@@ -213,7 +213,7 @@ namespace BookShoppingNeu
                     }
                     else
                     {
-                        BuchTabelleAusfuelen(line);
+                        FillBookTable(line);
                     }
                     //foreach (string s in zerlegendeLine2)
                     //{
@@ -227,9 +227,9 @@ namespace BookShoppingNeu
 
 
         }
-        public bool DatenPruefen(string email, string benutzer, string pass)
+        public bool CheckData(string email, string user, string pass)
         {
-            bool gefunden = false;
+            bool found = false;
 
             using (var db = new BookshoppingContext())
             {
@@ -243,23 +243,23 @@ namespace BookShoppingNeu
                     var permail = (from e in db.Persons where e.PersonEmail == email && e.PersonUser == benutzer && e.PersonPasswort == pass select e);
                     if (permail.Any())
                     {
-                        gefunden = true;
+                        found = true;
                     }
 
                 }
 
-                if (gefunden is true)
+                if (found is true)
                 {
                     Console.WriteLine("Wilkommen");
                     Console.WriteLine("Möchten Sie Buch Kaufen K/ oder Ihre persönliche Profil zeigen Z/ ?");
-                    string antwort = Console.ReadLine();
-                    antwort.ToLower();
-                    if (antwort == "k")
+                    string answere = Console.ReadLine();
+                    answere.ToLower();
+                    if (answere == "k")
                     {
                         // in diesem Schritt zeigen wir die Bibliothek, um Buecher zu kaufen
 
                     }
-                    else if(antwort == "z")
+                    else if(answere == "z")
                     {
                         // in diesem Schritt zeigen wir die persönliche Daten für ein Mitglieder und History, wenn es gibt
                     }
@@ -274,7 +274,7 @@ namespace BookShoppingNeu
 
                     Program prog = new Program();
 
-                    prog.DataEingeben();
+                    prog.InputData();
 
 
                 }
@@ -286,10 +286,10 @@ namespace BookShoppingNeu
 
             }
 
-            return gefunden;
+            return found;
 
         }
-        public void NeuPersonhinzufuegen(string Geschlecht, string Name, string Vorname, string strasse, string plz, string stadt, string email, string benutzername, string pass, string geburtsdatum)
+        public void AddNewPerson(string Geschlecht, string Name, string Vorname, string strasse, string plz, string stadt, string email, string benutzername, string pass, string geburtsdatum)
         {
             using (var db = new BookshoppingContext())
             {
@@ -315,9 +315,9 @@ namespace BookShoppingNeu
 
             Program prog = new Program();
 
-            prog.DataEingeben();
+            prog.InputData();
         }
-        public int CategoryFormathilf(string cat, string form)
+        public int CategoryFormatHelp(string cat, string form)
         {
 
             using (var db = new BookshoppingContext())
@@ -325,79 +325,79 @@ namespace BookShoppingNeu
 
                 if (cat == "Belletristik" && form == "Hardcover")
                 {
-                    pruf = 1;
+                    check = 1;
                 }
                 else if (cat == "Sachbuch" && form == "Hardcover")
                 {
-                    pruf = 2;
+                    check = 2;
                 }
                 else if (cat == "Belletristik" && form == "Paperback")
                 {
-                    pruf = 3;
+                    check = 3;
                 }
                 else if (cat == "Sachbuch" && form == "Paperback")
                 {
-                    pruf = 4;
+                    check = 4;
                 }
                 else if (cat == "Sachbuch" && form == "Taschenbuch")
                 {
-                    pruf = 5;
+                    check = 5;
                 }
                 else if (cat == "Sachbuch" && form == "Buch")
                 {
-                    pruf = 6;
+                    check = 6;
                 }
                 else if (cat == "Bilderbuch" && form == "Buch")
                 {
-                    pruf = 7;
+                    check = 7;
                 }
                 else if (cat == "Kinderbücher" && form == "Buch")
                 {
-                    pruf = 8;
+                    check = 8;
                 }
                 else if (cat == "Sachbuch" && form == "CD")
                 {
-                    pruf = 9;
+                    check = 9;
                 }
                 else if (cat == "Belletristik" && form == "CD")
                 {
-                    pruf = 10;
+                    check = 10;
                 }
                 else if (cat == "Kinder & Jugend" && form == "CD")
                 {
-                    pruf = 11;
+                    check = 11;
                 }
                 else if (cat == "Spielfilm" && form == "DVD")
                 {
-                    pruf = 12;
+                    check = 12;
                 }
                 else if (cat == "TV & Hobby" && form == "DVD")
                 {
-                    pruf = 13;
+                    check = 13;
                 }
                 else if (cat == "Leben & Gesundheit" && form == "Buch")
                 {
-                    pruf = 14;
+                    check = 14;
                 }
                 else if (cat == "Essen & Trinken" && form == "Buch")
                 {
-                    pruf = 15;
+                    check = 15;
                 }
                 else if (cat == "Natur & Garten" && form == "Buch")
                 {
-                    pruf = 16;
+                    check = 16;
                 }
                 else if (cat == "Wirtschaft" && form == "Buch")
                 {
-                    pruf = 17;
+                    check = 17;
                 }
-                hilf = pruf;
-                return hilf;
+                help = check;
+                return help;
 
             }
 
         }
-        public void BuchTabelleAusfuelen(string line)
+        public void FillBookTable(string line)
         {
 
             using (var db = new BookshoppingContext())
@@ -450,14 +450,14 @@ namespace BookShoppingNeu
 
                         }
                         Program pro = new Program();
-                        hilf = pro.CategoryFormathilf(cate, forma);
+                        hilf = pro.CategoryFormatHelp(cate, forma);
                     }
                     if (price != null)
                     {
                         switch (hilf)
                         {
                             case 1:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -470,7 +470,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 2:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -483,7 +483,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 3:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -496,7 +496,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 4:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -509,7 +509,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 5:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -522,7 +522,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 6:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -535,7 +535,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 7:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -548,7 +548,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 8:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -561,7 +561,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 9:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -574,7 +574,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 10:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -587,7 +587,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 11:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -600,7 +600,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 12:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -613,7 +613,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 13:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -626,7 +626,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 14:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -639,7 +639,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 15:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -652,7 +652,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 16:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
@@ -665,7 +665,7 @@ namespace BookShoppingNeu
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 17:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
