@@ -22,7 +22,7 @@ namespace BookShoppingNeu
 
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
         public DbSet<Person> Persons { get; set; }
-        public DbSet<Buch> Buescher { get; set; }
+        public DbSet<Buch> Buecher { get; set; }
         public DbSet<Katagorie> Catags { get; set; }
         public DbSet<Format> Formats { get; set; }
 

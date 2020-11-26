@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BookShoppingNeu
 {
@@ -22,14 +24,94 @@ namespace BookShoppingNeu
         {
             Program prog = new Program();
             prog.ReadData();
+            prog.InputData();           
             prog.ShowData();
-            prog.InputData();
-            // prog.Createdata();
-        
+           
+            Book [] BookBasket = new Book[];
+            buymore:
+            BookBasket = prog.AddBasket();
+            prog.Buy(BookBasket);
+            // prog.CreateData();
+            
         }
 
+        public Book [] AddBasket(){
+        
+             Console.WriteLine("Welchelchen Titel möchten sie den Warenkorb hinzufügen ?");
 
-        private void Createdata()
+             string choice = Console.ReadLine();
+
+             int i = 0;
+
+             bool ContinueAdd = true;
+
+             while(ContinueAdd != false){
+
+                using (var context = new BookShoppingContext()){
+                {
+                    var query = context.Book
+                         .where(s => s.Title == choice)
+                         .FirstOrDefault<Book>();
+         
+                
+
+         
+                }
+                }           
+                Book [] Basket = new Book [];
+                Book [i] = BookChoice;
+                i++;
+
+
+               Console.WriteLine("Wollen sie noch ein Buch hinzufügen (y/n)?");
+               char decision = Console.Read();
+            
+               decision:
+                 if(decision == "y"){
+                    ContinueAdd == true; 
+                 }
+                
+
+                else if ( decision == "n"){
+                
+                     ContinueAdd == false;
+                }
+
+                 else{
+                        Console.WriteLine("Bitte eine der Auswahlmöglichkeiten wählen.");
+                        goto decision;
+                }
+            }
+
+       
+        public void Buy(Book [] Basket){
+            
+          Console.WriteLine("Möchten sie den Kauf durchführen (y/n)?");
+          char agreebuy = Console.Read();
+          
+          retry:
+          
+          if ( agreebuy == "y" ){
+                Console.WriteLine("Ihr kauf wurde abgeschlossen, die Lieferung wird in zwei, bis drei Werktagen bei ihnen eintreffen.");
+                Array.Clear(Basket,0,Basket.Length);
+                
+                } 
+            
+          else if (agreebuy == "n"){
+              goto buymore;
+           }
+
+          else{
+                Console.WriteLine("Bitte eine gültige Auswahl treffen.");
+                goto retry;
+           }
+        
+
+
+        }
+         
+      
+        private void CreateData()
         {
 
 
