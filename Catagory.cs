@@ -1,10 +1,10 @@
 ﻿namespace BookShoppingNeu
 {
     // Catagorie Entity 
-    public class Category
+    public class Catagory
     {
 
-        public int CategorieId { get; set; }
+        public int Id { get; set; }
         public string CategorieType { get; set; }
         //[ForeignKey("BuchID")]
         //public int BuchID { get; set; }

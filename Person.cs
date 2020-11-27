@@ -10,7 +10,7 @@ namespace BookShoppingNeu
     {
        
        
-        public int PersonId { get; set; }
+        public int Id { get; set; }
         public string PersonGender { get; set; }
         public string PersonLastName { get; set; }
         public string PersonFirstname { get; set; }
@@ -24,18 +24,18 @@ namespace BookShoppingNeu
        
     
        
-        // public List<Buch> buecher { get; set; }
+         public List<Book> books { get; set; }
 
 
 
         //public int BuchId { get; set; }
 
-        //public override string ToString()
-        //{
-        //    return "Gender :" + PersonGender + "Name :" + PersonName +
-        //            "Vorname :" + PersonVorname + "Adresse : " + PersonPLZ + PersonStadt + PersonStraße +
-        //            "Geburtsdatum :" + PersonBirthay + "Zugangsdaten :" + PersonUser + PersonEmail + PersonPasswort;
-        //}
+       public override string ToString()
+        {
+            return  PersonGender + "," + PersonFirstname + 
+                    "," + PersonLastName + "," + PersonStreet + "," + PersonPLZ + "," +  PersonCity + "," + PersonEmail +
+                 "," + PersonUser + "," + PersonPasswort + "," + PersonBirthay + '\n' ;
+        }
     }
 }
 

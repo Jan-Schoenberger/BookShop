@@ -7,7 +7,7 @@ namespace BookShoppingNeu
         public string MoechteKaufen { get; set; }
         
 
-        public Buch Buch { get; set; }
+        public Book Buch { get; set; }
         public Person Person { get; set; }
 
 

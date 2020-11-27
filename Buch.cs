@@ -5,9 +5,9 @@ using System.Data;
 namespace BookShoppingNeu
 {
     // Buch Entity 
-    public class Buch
+    public class Book
     {
-        public int BuchID { get; set; }
+        public int Id { get; set; }
         public string Author { get; set; }
         public string Title { get; set; }
         public string EAN { get; set; }
@@ -17,18 +17,16 @@ namespace BookShoppingNeu
         
 
 
-        public virtual Person? Person { get;  set; }
-        public string FormatArt { get; set; }
-        public virtual Format? Format { get; set; }
-        public string KatagorieArt { get; set; }
-        public virtual Katagorie? Katagorie { get; set; }
         
-        //public override string ToString()
-        //{
-        //    return "Buch Author :" + Author + "Buch Titel :" + Title +
-        //           "Buch EAN :" + EAN + "Buch Publisher :" + Publisher + "Datum :" + Date +
-        //            "Price :" + Price;
-        //}
+       
+        public virtual int? FormatId { get; set; }
+       public int? CategorieId { get; set; }
+        
+      public override string ToString()
+        {
+           return "Buch Author :" + Author + '\t' + "Buch Titel :" + Title + '\t' +
+                   "Buch EAN :" + EAN + '\t' + "Buch Publisher :" + Publisher + '\t' + "Datum :" + Date +
+                   '\t' + "Price :" + Price;}
     
 }
-
+}
