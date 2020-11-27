@@ -10,7 +10,7 @@ using System.Linq;
 using System.IO;
 
 namespace BookShoppingNeu
-{class Program : Book
+{ class Program : Book
     {
         public int pruf;
         public int hilf;
@@ -80,47 +80,47 @@ namespace BookShoppingNeu
             Program prog = new Program();
 
 
-            Console.WriteLine("****Buchladen****");
+            Console.WriteLine(" ****Buchladen****");
             Console.WriteLine();
-            Console.WriteLine("Möchten Sie registirieren oder sich anmelden?");
+            Console.WriteLine(" Möchten Sie registirieren oder sich anmelden?");
             Console.WriteLine();
 
-            Console.Write("Registrierung (R), Anmeldung (A)");
+            Console.Write(" Registrierung (R), Anmeldung (A)");
             string eing = Console.ReadLine();
             eing.ToLower();
           
             if (eing == "r")
             {
-                Console.WriteLine("-------Registrierung-------");
-                Console.Write("Gender M/F : ");
+                Console.WriteLine(" -------Registrierung-------");
+                Console.Write(" Gender M/F : ");
                string  gender = Console.ReadLine();
 
-                Console.Write("Vorname : ");
+                Console.Write(" Vorname : ");
                 string vorname = Console.ReadLine();
                 
 
-                Console.Write("Nachname : ");
+                Console.Write(" Nachname : ");
                 string nachname = Console.ReadLine();
 
-                Console.Write("Straße : ");
+                Console.Write(" Straße : ");
                 string straße = Console.ReadLine();
 
-                Console.Write("PLZ : ");
+                Console.Write(" PLZ : ");
                 string plz = Console.ReadLine();
 
-                Console.Write("Stadt : ");
+                Console.Write(" Stadt : ");
                 string stadt = Console.ReadLine();
 
-                Console.Write("Email : ");
+                Console.Write(" Email : ");
                 string email = Console.ReadLine();
 
-                Console.Write("Benutzername : ");
+                Console.Write(" Benutzername : ");
                 string benutzername = Console.ReadLine();
 
-                Console.Write("Passwort : ");
+                Console.Write(" Passwort : ");
                 string passwort = Console.ReadLine();
 
-                Console.Write("Geburtsdatum : ");
+                Console.Write(" Geburtsdatum : ");
                 string Gdatum = Console.ReadLine();
 
 
@@ -130,14 +130,14 @@ namespace BookShoppingNeu
             }
             else
             {
-                
-                Console.WriteLine("-------Anmeldung-------");
                 Console.WriteLine();
-                Console.Write("Email : ");
+                Console.WriteLine(" -------Anmeldung-------");
+                Console.WriteLine();
+                Console.Write(" Email : ");
                 string email = Console.ReadLine();
-                Console.Write("Benutzername : ");
+                Console.Write(" Benutzername : ");
                 string benutzer = Console.ReadLine();
-                Console.Write("Passwort : ");
+                Console.Write(" Passwort : ");
                 string passwort = Console.ReadLine();
                 bool bo = DatenPruefen(email, benutzer, passwort);
                 // prüfen wir, ob die Daten richtig sind
@@ -172,9 +172,9 @@ namespace BookShoppingNeu
                         {
                             // PersonId = i,
                             PersonGender = zerlegendeLine[i],
-                            PersonLastName = zerlegendeLine[i++],
+                            PersonLastName  = zerlegendeLine[i++],
                             PersonFirstname = zerlegendeLine[i++],
-                            PersonStreet = zerlegendeLine[i++],
+                            PersonStreet  = zerlegendeLine[i++],
                             PersonPLZ = zerlegendeLine[i++],
                             PersonCity = zerlegendeLine[i++],
                             PersonEmail = zerlegendeLine[i++],
@@ -203,7 +203,7 @@ namespace BookShoppingNeu
                             {
                                 db.Add(new Catagory
                                 {
-                                    CategorieType = zerlegendeLine2[1]
+                                   CategorieType = zerlegendeLine2[1]
 
                                 });
                                 db.SaveChanges();
@@ -278,9 +278,10 @@ namespace BookShoppingNeu
                 {
                     currPersonemail = email;
                     currPersonPasswort = pass;
-                    Console.WriteLine("Wilkommen");
-                    Console.WriteLine("Möchten Sie Buch Kaufen K/ oder Ihre persönliche Profil zeigen Z/ ?");
-                    string antwort = Console.ReadLine();
+                    Console.WriteLine();
+                    Console.WriteLine(" Wilkommen");
+                    Console.Write(" Möchten Sie Buch Kaufen K/ oder Ihre persönliche Profil zeigen Z/ ?");
+                    string antwort = Console.ReadLine().ToLower();
                     antwort.ToLower();
                     if (antwort == "k")
                     {
@@ -294,12 +295,12 @@ namespace BookShoppingNeu
                     }
                     else
                     {
-                        Console.WriteLine("Versuchen Sie noch einaml, entweder mit K oder mit Z zu beantworten " + "\v" + "Danke!");
+                        Console.Write(" Versuchen Sie noch einaml, entweder mit K oder mit Z zu beantworten " + '\v' + "Danke!");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Versuchen Sie sich noch einmal anzumelden A / Oder sich zu registrieren R");
+                    Console.Write(" Versuchen Sie sich noch einmal anzumelden A / Oder sich zu registrieren R");
 
                     Program prog = new Program();
 
@@ -331,7 +332,7 @@ namespace BookShoppingNeu
 
                     PersonGender = Geschlecht,
                     PersonLastName = Name,
-                    PersonFirstname = Vorname,
+                    PersonFirstname  = Vorname,
                     PersonStreet = strasse,
                     PersonPLZ = plz,
                     PersonCity = stadt,
@@ -365,7 +366,7 @@ namespace BookShoppingNeu
             }
            
            
-                Console.WriteLine("Melden Sie sich bitte!");
+                Console.WriteLine(" Melden Sie sich bitte!");
 
             Program prog = new Program();
 
@@ -574,7 +575,7 @@ namespace BookShoppingNeu
                                     Date = date,
                                     Price = price,
                                     FormatId = 4,
-                                   CategorieId = 10,
+                                    CategorieId = 10,
 
 
                                 };
@@ -632,7 +633,7 @@ namespace BookShoppingNeu
                                 {
                                     // db.Entry<Buch>(b).State = EntityState.Detached;
                                     buch = db.Books.Find(cnt);
-                                    // db.Entry<Buch>(b).State = EntityState.Detached;
+                                    db.Entry<Book>(b).State = EntityState.Detached;
                                 }
 
                                 //KatagorieFormatIDAusfuellen(cate, forma, buch);
@@ -651,7 +652,7 @@ namespace BookShoppingNeu
                                     Date = date,
                                     Price = price,
                                     FormatId = 5,
-                                   CategorieId = 10
+                                    CategorieId= 10
 
 
                                 }
@@ -668,7 +669,7 @@ namespace BookShoppingNeu
                                 {
                                     // db.Entry<Buch>(b).State = EntityState.Detached;
                                     buch = db.Books.Find(cnt);
-                                    db.Entry<Book>(b).State = EntityState.Detached;
+                                    db.Entry<Bookh>(b).State = EntityState.Detached;
                                 }
 
                                 //KatagorieFormatIDAusfuellen(cate, forma, buch);
@@ -790,7 +791,7 @@ namespace BookShoppingNeu
                                     Date = date,
                                     Price = price,
                                     FormatId = 1,
-                                    CategorieId = 10
+                                   CategorieId = 10
 
                                 }
                                ;
@@ -824,7 +825,7 @@ namespace BookShoppingNeu
                                     Date = date,
                                     Price = price,
                                     FormatId = 1,
-                                   CategorieId = 2
+                                    CategorieId = 2
 
 
                                 }
@@ -1066,7 +1067,7 @@ namespace BookShoppingNeu
                                     Date = date,
                                     Price = price,
                                     FormatId = 1,
-                                   CategorieId= 9
+                                    CategorieId = 9
 
                                 }
                               ;
@@ -1100,7 +1101,7 @@ namespace BookShoppingNeu
                                     Date = date,
                                     Price = price,
                                     FormatId = 1,
-                                    CategorieId = 3
+                                   CategorieId = 3
 
                                 }
                                ;
@@ -1134,7 +1135,7 @@ namespace BookShoppingNeu
                                     Date = date,
                                     Price = price,
                                     FormatId = 1,
-                                    CategorieId = 6
+                                   CategorieId = 6
 
                                 }
                               ;
@@ -1168,7 +1169,7 @@ namespace BookShoppingNeu
                                     Date = date,
                                     Price = price,
                                     FormatId = 1,
-                                   CategorieId = 4
+                                    CategorieId = 4
 
                                 }
                               ;
@@ -1202,7 +1203,7 @@ namespace BookShoppingNeu
                                     Date = date,
                                     Price = price,
                                     FormatId = 1,
-                                   CategorieId = 13
+                                    CategorieId = 13
 
                                 }
                               ;
@@ -1236,10 +1237,12 @@ namespace BookShoppingNeu
         }
         public int BuchBibliothekZeigen()
         {
+            string  buchAuthor, buchPrice, buchEan, buchDate, buchPublisher, buchTitle, buchId;
+            //int buchId;
             int antwort;
-            Console.Write("Wählen Sie eine Kategorie aus ?");
+            Console.Write(" Wählen Sie eine Kategorie aus ?");
             int kId = KategorieZeigen();
-            Console.Write("Wählen Sie eine Format aus ?");
+            Console.Write(" Wählen Sie eine Format aus ?");
             int fId = FormatZeigen();
 
             using (var db = new BookshoppingContext())
@@ -1253,18 +1256,42 @@ namespace BookShoppingNeu
                                 Buchauthor = b.Author,
                                 Buchprice = b.Price,
                                 Buchdatum = b.Date,
-                                pBuchpublish = b.Publisher,
-                                Buchtitle = b.Publisher,
+                                Buchpublish = b.Publisher,
+                                Buchtitle = b.Title,
+                                Buchean = b.EAN
 
                             };
                 foreach (var s in buch1)
                 {
-                    Console.WriteLine(s.ToString());
+                    buchId = s.Buchnummer.ToString();
+                    buchAuthor = s.Buchauthor;
+                    buchPrice = s.Buchprice;
+                    buchEan = s.Buchean;
+                    buchDate = s.Buchdatum;
+                    buchPublisher = s.Buchpublish;
+                    buchTitle = s.Buchtitle;
+
+                    Console.WriteLine(" Buchnummer : " + buchId + '\n' + " Autor : " + buchAuthor +'\n'
+                                      + " Preis : " + buchPrice + '\n' + " Datum : " + buchDate + '\n' + " Publisher : " + buchPublisher 
+                                      + '\n' + " Title : " + buchTitle + '\n' + " EAN : " + buchEan + '\n');
+                        
                 }
-                Console.WriteLine();
-                Console.WriteLine("Wählen Sie ein Buch aus / Nummer des Buchs");
+
+               
+                Console.Write(" Wählen Sie ein Buch aus / Nummer des Buchs : ");
                 antwort = Convert.ToInt32(Console.ReadLine());
                 BuchHinzufuegen(antwort);
+                Console.Write(" Möchten Sie andere Buch Kaufen K/ oder möchzen Sie Ihr persönliche Profil ansehen Z/?");
+                string stringAntwort = Console.ReadLine().ToLower();
+                if(stringAntwort == "k")
+                {
+                    BuchBibliothekZeigen();
+                }
+                else
+                {
+                    ProfilZeigen();
+                    // Profil ansehen 
+                }
                 return antwort;
 
             }
@@ -1366,81 +1393,81 @@ namespace BookShoppingNeu
 
             return meinKat;
         }
-        public void BuchKaufen(int Buchnummer, string antwort2)
-        {
-            using (var db = new BookshoppingContext())
-            {
+        //public void BuchKaufen(int Buchnummer, string antwort2)
+        //{
+        //    using (var db = new BookshoppingContext())
+        //    {
 
-                var buch = from b in db.Books
-                           where b.Id == Buchnummer
-                           select new
-                           {
-                               BuchTitle = b.Title,
-                               BuchPrice = b.Price
-                           };
+        //        var buch = from b in db.Buescher
+        //                   where b.Id == Buchnummer
+        //                   select new
+        //                   {
+        //                       BuchTitle = b.Title,
+        //                       BuchPrice = b.Price
+        //                   };
 
 
-                foreach (var s in buch)
-                {
-                    if (antwort2 == "k")
-                    {
-                        db.Add(new History
-                        {
-                            BuchKaufen = s.BuchTitle
-                        });
+        //        foreach (var s in buch)
+        //        {
+        //            if (antwort2 == "k")
+        //            {
+        //                db.Add(new History
+        //                {
+        //                    BuchKaufen = s.BuchTitle
+        //                });
 
-                        db.SaveChanges();
-                        Console.WriteLine();
-                        Console.WriteLine("Der Buch " + s.BuchTitle + "kostet " + s.BuchPrice + "Wird in deinem Warenkrob hinzufügt ");
-                        Console.Write("Wenn Sie deinen Warenkrob sehen möchten,drücken Sie /wk");
-                        string antwort = Console.ReadLine();
-                        HistoryZeigen(antwort);
-                    }
-                    else if (antwort2 == "f")
-                    {
-                        db.Add(new History
-                        {
-                            MoechteKaufen = s.BuchTitle
+        //                db.SaveChanges();
+        //                Console.WriteLine();
+        //                Console.Write(" Der Buch " + s.BuchTitle + "kostet " + s.BuchPrice + "Wird in deinem Warenkrob hinzufügt ");
+        //                Console.Write(" Wenn Sie deinen Warenkrob sehen möchten,drücken Sie /wk");
+        //                string antwort = Console.ReadLine();
+        //                HistoryZeigen(antwort);
+        //            }
+        //            else if (antwort2 == "f")
+        //            {
+        //                db.Add(new History
+        //                {
+        //                    MoechteKaufen = s.BuchTitle
 
-                        });
-                        db.SaveChanges();
-                        Console.WriteLine();
-                        Console.WriteLine("Der Buch " + s.BuchTitle + "kostet " + s.BuchPrice + "Wird in deiner Wunschliste hinzufügt ");
-                        Console.Write("Wenn Sie deine Wunschliste sehen möchten,drücken Sie /wl");
-                        string antwort = Console.ReadLine();
-                        HistoryZeigen(antwort);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Versuchen Sie noch einmal ");
-                        BuchBibliothekZeigen();
+        //                });
+        //                db.SaveChanges();
+        //                Console.WriteLine();
+        //                Console.WriteLine(" Der Buch " + s.BuchTitle + "kostet " + s.BuchPrice + "Wird in deiner Wunschliste hinzufügt ");
+        //                Console.Write(" Wenn Sie deine Wunschliste sehen möchten,drücken Sie /wl");
+        //                string antwort = Console.ReadLine();
+        //                HistoryZeigen(antwort);
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine(" Versuchen Sie noch einmal ");
+        //                BuchBibliothekZeigen();
 
-                    }
+        //            }
 
-                }
+        //        }
 
-            }
+        //    }
 
-        }
-        public void HistoryZeigen(string antwort)
-        {
+        //}
+        //public void HistoryZeigen(string antwort)
+        //{
          
-            using (var db = new BookshoppingContext())
-            {
-                if (antwort == "wk")
-                {
-                    var Wark = from w in db.Histories
-                               select new
-                               {
-                                   Title = w.BuchKaufen
-                               };
-                    foreach (var s in Wark)
-                    {
-                        Console.WriteLine(s);
-                    }
-                } // hie nur Wuschliste zeigen 
-            }
-        }
+        //    using (var db = new BookshoppingContext())
+        //    {
+        //        if (antwort == "wk")
+        //        {
+        //            var Wark = from w in db.Histories
+        //                       select new
+        //                       {
+        //                           Title = w.BuchKaufen
+        //                       };
+        //            foreach (var s in Wark)
+        //            {
+        //                Console.WriteLine(s);
+        //            }
+        //        } // hie nur Wuschliste zeigen 
+        //    }
+        //}
         public void IDAusfüllen()
         {
             using (var db = new BookshoppingContext())
@@ -1526,23 +1553,30 @@ namespace BookShoppingNeu
                 string author = buch.Author;
                 string title = buch.Title;
                 string price = buch.Price;
+                string ean = buch.EAN;
+                string publisher = buch.Publisher;
+                string date = buch.Date;
                 var per1 = db.Persons.OrderBy(p => p.Id).First();
                 var per = from p in db.Persons where p.PersonEmail.Contains(currPersonemail) && p.PersonPasswort.Contains(currPersonPasswort) select p;
                 foreach (var p in per)
                 {
                     pid = p.Id;
                     person = db.Persons.Find(pid);
-                    person.books?.Add(
-                        new Book
-                        {
-                           Author = author,
-                           Title = title,
-                            Price = price
-                        });
-                    db.Persons.Update(person);
-                    var atta = db.Attach(db.Persons);
+
+                    person.books?.Add(new Book()
+                    {
+                        Author = author,
+                        Title = title,
+                        Price = price,
+                        EAN = ean,
+                        Publisher = publisher,
+                        Date = date,
+                    }) ;
+
+                   
+                    var atta = db.Attach(person);
                     atta.State = EntityState.Modified;
-                    db.Update(db.Persons);
+                    db.Update(person);
                     db.SaveChanges();
 
                 }
@@ -1555,7 +1589,56 @@ namespace BookShoppingNeu
 
         }
 
-        
+        public void ProfilZeigen()
+        {
+            string? FirstName, LastName, Email, User;
+                
+            using (var db = new BookshoppingContext())
+            {
+                var per = from p in db.Persons
+                          where p.PersonEmail == currPersonemail && p.PersonPasswort == currPersonPasswort
+                          select p;
+                var per1 = from p in db.Persons
+                          where p.PersonEmail == currPersonemail && p.PersonPasswort == currPersonPasswort
+                          select p.books;
+
+                Console.WriteLine("Mitglierder Profil");
+                Console.WriteLine();
+                Console.WriteLine("Ihr persönliche Daten :");
+                foreach(var s in per)
+                {
+                    
+                     FirstName = s.PersonFirstname;
+                    LastName = s.PersonLastName;
+                     Email = s.PersonEmail;
+                     User = s.PersonUser;
+
+                    Console.WriteLine("Mitglieder Name :" + LastName + '\n' + "Mitglieder Vorname :" +
+                                        FirstName + '\n' + "Mitglieder Email : " + Email + '\n' + "Mitglieder Benutzername : " + User);
+                    Console.WriteLine();
+                    
+                }
+                
+                foreach (var s in per1) 
+                {
+                    s.ForEach(i => Console.WriteLine("{0}\n", i));
+
+                }
+               
+             }
+            Console.WriteLine("Möchten Sie andere Buch kaufen k/ oder Beenden B/");
+            string stringAntwort = Console.ReadLine().ToLower();
+            if(stringAntwort == "k")
+            {
+                BuchBibliothekZeigen();
+            }
+            else
+            {
+                Console.WriteLine("Auf Wiedersehen");
+                Console.ReadKey();
+            }
+
+        }
 
         public class DbUpdateException : Exception { }
 

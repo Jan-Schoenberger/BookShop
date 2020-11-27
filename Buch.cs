@@ -24,9 +24,9 @@ namespace BookShoppingNeu
         
       public override string ToString()
         {
-           return "Buch Author :" + Author + '\t' + "Buch Titel :" + Title + '\t' +
-                   "Buch EAN :" + EAN + '\t' + "Buch Publisher :" + Publisher + '\t' + "Datum :" + Date +
-                   '\t' + "Price :" + Price;}
+           return "Buch Author :" + Author + '\n' + "Buch Titel :" + Title + '\n' +
+                   "Buch EAN :" + EAN + '\n' + "Buch Publisher :" + Publisher + '\n' + "Datum :" + Date +
+                   '\n' + "Price :" + Price;}
     
 }
 }
