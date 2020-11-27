@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BookShoppingNeu
 {
@@ -14,26 +16,101 @@ namespace BookShoppingNeu
     {
         public int check;
         public int help;
-        public int count;
+        public int counter;
         public string cate;
-        public string format;
-        public string myCategory;
-        public string myFormat;
-
-        
+        public string forma;
         private string author, title, ean, publisher, date, price;
         private static void Main()
         {
-            // Program prog = new Program();
-            DateiAuslesen();
-            ShowData();
-            DataInput();
-            // prog.Createdata();
+            Program prog = new Program();
+            prog.ReadData();
+            prog.InputData();           
+            prog.ShowData();
            
+            Book [] BookBasket = new Book[];
+            buymore:
+            BookBasket = prog.AddBasket();
+            prog.Buy(BookBasket);
+            // prog.CreateData();
+            
+        }
 
+        public Book [] AddBasket(){
+        
+             Console.WriteLine("Welchelchen Titel möchten sie den Warenkorb hinzufügen ?");
+
+             string choice = Console.ReadLine();
+
+             int i = 0;
+
+             bool ContinueAdd = true;
+
+             while(ContinueAdd != false){
+
+                using (var context = new BookShoppingContext()){
+                {
+                    var query = context.Book
+                         .where(s => s.Title == choice)
+                         .FirstOrDefault<Book>();
+         
+                
+
+         
+                }
+                }           
+                Book [] Basket = new Book [];
+                Book [i] = BookChoice;
+                i++;
+
+
+               Console.WriteLine("Wollen sie noch ein Buch hinzufügen (y/n)?");
+               char decision = Console.Read();
+            
+               decision:
+                 if(decision == "y"){
+                    ContinueAdd == true; 
+                 }
+                
+
+                else if ( decision == "n"){
+                
+                     ContinueAdd == false;
+                }
+
+                 else{
+                        Console.WriteLine("Bitte eine der Auswahlmöglichkeiten wählen.");
+                        goto decision;
+                }
+            }
+
+       
+        public void Buy(Book [] Basket){
+            
+          Console.WriteLine("Möchten sie den Kauf durchführen (y/n)?");
+          char agreebuy = Console.Read();
+          
+          retry:
+          
+          if ( agreebuy == "y" ){
+                Console.WriteLine("Ihr kauf wurde abgeschlossen, die Lieferung wird in zwei, bis drei Werktagen bei ihnen eintreffen.");
+                Array.Clear(Basket,0,Basket.Length);
+                
+                } 
+            
+          else if (agreebuy == "n"){
+              goto buymore;
+           }
+
+          else{
+                Console.WriteLine("Bitte eine gültige Auswahl treffen.");
+                goto retry;
+           }
+        
 
 
         }
+         
+      
         private void CreateData()
         {
 
@@ -47,16 +124,11 @@ namespace BookShoppingNeu
                 Console.WriteLine("\n----- Anzahl der Mitglieder -----");
 
                 Console.WriteLine($" - {db.Persons.Count()} Mitglieder");
-                Console.WriteLine("-----------------------------------");
+                Console.WriteLine("--------------------------------");
                 Console.WriteLine();
-                Console.WriteLine("\n------- Anzahl der Buecher -------");
-                Console.WriteLine($" - {db.Buescher.Count()} Buecher in unsere Bibliothek");
-                Console.WriteLine("------------------------------------");
-                Console.WriteLine();
-
-                Console.WriteLine("\n------- Anzahl der Category -------");
-                Console.WriteLine($" - {db.Catags.Count()} Category in unsere Bibliothek");
-                Console.WriteLine("------------------------------------");
+                Console.WriteLine("\n----- Anzahl der Buecher -----");
+                Console.WriteLine($" - {db.Books.Count()} Buecher in unsere Bibliothek");
+                Console.WriteLine("--------------------------------");
                 Console.WriteLine();
 
 
@@ -75,7 +147,7 @@ namespace BookShoppingNeu
                 */
             }
         }
-        public void DataInput()
+        public void InputData()
         {
             Program prog = new Program();
 
@@ -86,13 +158,13 @@ namespace BookShoppingNeu
             Console.WriteLine();
 
             Console.Write("Registrierung (R), Anmeldung (A)");
-            string eing = Console.ReadLine();
-            eing.ToLower();
+            string input = Console.ReadLine();
+            input.ToLower();
 
-            if (eing == "r")
-            {   
+            if (input == "R" || input == "r")
+            {
                 Console.WriteLine("-------Registrierung-------");
-                Console.Write(" Eingabe Geschlecht M/F: ");
+                Console.Write("Gender M/F: ");
                 string gender = Console.ReadLine();
 
                 Console.Write("Vorname: ");
@@ -102,7 +174,7 @@ namespace BookShoppingNeu
                 string lastname = Console.ReadLine();
 
                 Console.Write("Straße: ");
-                string street = Console.ReadLine();
+                string steet = Console.ReadLine();
 
                 Console.Write("PLZ: ");
                 string plz = Console.ReadLine();
@@ -117,39 +189,37 @@ namespace BookShoppingNeu
                 string username = Console.ReadLine();
 
                 Console.Write("Passwort: ");
-                string passwort = Console.ReadLine();
+                string password = Console.ReadLine();
 
                 Console.Write("Geburtsdatum: ");
-                string bday = Console.ReadLine();
+                string Bday = Console.ReadLine();
 
 
                 // fügen wir die neue Mitglieder zu unsere Daten bank ein 
-                prog.AddNewPerson(gender, lastname, firstname, street, plz, city, email, username, passwort, bday);
+                prog.AddNewPerson(gender, lastname, firstname, steet, plz, city, email, username, password, Bday);
 
             }
             else
             {
                 Console.WriteLine("-------Anmeldung-------");
                 Console.WriteLine();
-                Console.Write("Email : ");
+                Console.Write("Email: ");
                 string email = Console.ReadLine();
-                Console.Write("Benutzername : ");
-                string benutzer = Console.ReadLine();
+                Console.Write("Benutzername: ");
+                string user = Console.ReadLine();
                 Console.Write("Passwort : ");
                 string passwort = Console.ReadLine();
-                prog.DatenPruefen(email, benutzer, passwort);
+                prog.CheckData(email, user, password);
                 // prüfen wir, ob die Daten richtig sind
-           
 
             }
 
         }
-        public void ReadFile()
+        public void ReadData()
         {
-            // string cat, form;
-
+            string cat, form;
             
-            //int hilfer; //  >> Heißt Helfer.
+            //int hilfer;
             using (var db = new BookshoppingContext())
             {
                 db.Database.EnsureDeleted();
@@ -158,33 +228,31 @@ namespace BookShoppingNeu
                 //List<Person> per;
                 string line;
 
-                String FilenamePersons = @"C:\tmp\fake-persons.txt";
-                System.IO.StreamReader FilePerson = new System.IO.StreamReader(FilenamePersons);
-                String FilenameBook = @"C:\tmp\spiegel-bestseller.txt";
-                System.IO.StreamReader FileBook = new System.IO.StreamReader(FilenameBook);
-                
+
+                System.IO.StreamReader file = new System.IO.StreamReader(@"C:\tmp\fake-persons.txt");
+                System.IO.StreamReader file2 = new System.IO.StreamReader(@"C:\tmp\spiegel-bestseller.txt");
                 while ((line = file.ReadLine()) != null)
                 {
-                    string[] SplitedLine = line.Split(",".ToCharArray());
+                    string[] splitLine = line.Split(",".ToCharArray());
                     //foreach (string s in zerlegendeLine)
                     //{
                     //    Console.WriteLine(s);
                     //}
-                    for (int i = 1; i < SplitedLine.Length; i++)
+                    for (int i = 1; i < splitLine.Length; i++)
                     {
                         db.Add(new Person
                         {
                             // PersonId = i,
-                            PersonGender = SplitedLine[i],
-                            PersonName = SplitedLine[i++],
-                            PersonVorname = SplitedLine[i++],
-                            PersonStraße = SplitedLine[i++],
-                            PersonPLZ = SplitedLine[i++],
-                            PersonStadt = SplitedLine[i++],
-                            PersonEmail = SplitedLine[i++],
-                            PersonUser = SplitedLine[i++],
-                            PersonPasswort = SplitedLine[i++],
-                            PersonBirthay = SplitedLine[i++]
+                            PersonGender = splitLine[i],
+                            PersonName = splitLine[i++],
+                            PersonVorname = splitLine[i++],
+                            PersonStraße = splitLine[i++],
+                            PersonPLZ = splitLine[i++],
+                            PersonStadt = splitLine[i++],
+                            PersonEmail = splitLine[i++],
+                            PersonUser = splitLine[i++],
+                            PersonPasswort = splitLine[i++],
+                            PersonBirthay = splitLine[i++]
 
                         });
                         db.SaveChanges();
@@ -192,28 +260,28 @@ namespace BookShoppingNeu
                         // PS soll ich ein andere daten banl tabelle erstellen um (Person, Bucher) daten zu speichern
                     }
                 }
-                while ((line = FilePerson.ReadLine()) != null)
+                while ((line = file2.ReadLine()) != null)
                 {
                     if (line != "### titles by category and format")
                     {
-                        string[] SplitedLine2 = line.Split(":".ToCharArray());
+                        string[] splitLine2 = line.Split(":".ToCharArray());
 
-                        for (int i = 0; i < Line2.Length; i++)
+                        for (int i = 0; i < splitLine2.Length; i++)
                         {
-                            if (SplitedLine2[i] == "CATEGORY")
+                            if (splitLine2[i] == "CATEGORY")
                             {
-                                db.Add(new Katagorie
+                                db.Add(new Category
                                 {
-                                    CategoryType = SplitedLine2[1]
+                                    KategorieArt = splitLine2[1]
 
                                 });
                                 db.SaveChanges();
                             }
-                            else if (SplitedLine2[i] == "FORMAT")
+                            else if (splitLine2[i] == "FORMAT")
                             {
                                 db.Add(new Format
                                 {
-                                    FormatType = SplitedLine2[1]
+                                    FormatArt =splitLine2[1]
                                 });
                                 db.SaveChanges();
 
@@ -227,8 +295,7 @@ namespace BookShoppingNeu
                     }
                     else
                     {
-                        BuchTabelleAusfuelen(line);
-                        break;
+                        FillBookTable(line);
                     }
                     //foreach (string s in zerlegendeLine2)
                     //{
@@ -242,9 +309,9 @@ namespace BookShoppingNeu
 
 
         }
-        public bool DatenPruefen(string email, string benutzer, string pass)
+        public bool CheckData(string email, string user, string pass)
         {
-            bool gefunden = false;
+            bool found = false;
 
             using (var db = new BookshoppingContext())
             {
@@ -258,23 +325,23 @@ namespace BookShoppingNeu
                     var permail = (from e in db.Persons where e.PersonEmail == email && e.PersonUser == benutzer && e.PersonPasswort == pass select e);
                     if (permail.Any())
                     {
-                        gefunden = true;
+                        found = true;
                     }
 
                 }
 
-                if (gefunden is true)
+                if (found is true)
                 {
                     Console.WriteLine("Wilkommen");
                     Console.WriteLine("Möchten Sie Buch Kaufen K/ oder Ihre persönliche Profil zeigen Z/ ?");
-                    string antwort = Console.ReadLine();
-                    antwort.ToLower();
-                    if (antwort == "k")
+                    string answere = Console.ReadLine();
+                    answere.ToLower();
+                    if (answere == "k")
                     {
                         // in diesem Schritt zeigen wir die Bibliothek, um Buecher zu kaufen
 
                     }
-                    else if(antwort == "z")
+                    else if(answere == "z")
                     {
                         // in diesem Schritt zeigen wir die persönliche Daten für ein Mitglieder und History, wenn es gibt
                     }
@@ -289,7 +356,7 @@ namespace BookShoppingNeu
 
                     Program prog = new Program();
 
-                    prog.DataEingeben();
+                    prog.InputData();
 
 
                 }
@@ -301,10 +368,10 @@ namespace BookShoppingNeu
 
             }
 
-            return gefunden;
+            return found;
 
         }
-        public void NeuPersonhinzufuegen(string Geschlecht, string Name, string Vorname, string strasse, string plz, string stadt, string email, string benutzername, string pass, string geburtsdatum)
+        public void AddNewPerson(string Geschlecht, string Name, string Vorname, string strasse, string plz, string stadt, string email, string benutzername, string pass, string geburtsdatum)
         {
             using (var db = new BookshoppingContext())
             {
@@ -330,9 +397,9 @@ namespace BookShoppingNeu
 
             Program prog = new Program();
 
-            prog.DataEingeben();
+            prog.InputData();
         }
-        public int CategoryFormathilf(string cat, string form)
+        public int CategoryFormatHelp(string cat, string form)
         {
 
             using (var db = new BookshoppingContext())
@@ -340,79 +407,79 @@ namespace BookShoppingNeu
 
                 if (cat == "Belletristik" && form == "Hardcover")
                 {
-                    pruf = 1;
+                    check = 1;
                 }
                 else if (cat == "Sachbuch" && form == "Hardcover")
                 {
-                    pruf = 2;
+                    check = 2;
                 }
                 else if (cat == "Belletristik" && form == "Paperback")
                 {
-                    pruf = 3;
+                    check = 3;
                 }
                 else if (cat == "Sachbuch" && form == "Paperback")
                 {
-                    pruf = 4;
+                    check = 4;
                 }
                 else if (cat == "Sachbuch" && form == "Taschenbuch")
                 {
-                    pruf = 5;
+                    check = 5;
                 }
                 else if (cat == "Sachbuch" && form == "Buch")
                 {
-                    pruf = 6;
+                    check = 6;
                 }
                 else if (cat == "Bilderbuch" && form == "Buch")
                 {
-                    pruf = 7;
+                    check = 7;
                 }
                 else if (cat == "Kinderbücher" && form == "Buch")
                 {
-                    pruf = 8;
+                    check = 8;
                 }
                 else if (cat == "Sachbuch" && form == "CD")
                 {
-                    pruf = 9;
+                    check = 9;
                 }
                 else if (cat == "Belletristik" && form == "CD")
                 {
-                    pruf = 10;
+                    check = 10;
                 }
                 else if (cat == "Kinder & Jugend" && form == "CD")
                 {
-                    pruf = 11;
+                    check = 11;
                 }
                 else if (cat == "Spielfilm" && form == "DVD")
                 {
-                    pruf = 12;
+                    check = 12;
                 }
                 else if (cat == "TV & Hobby" && form == "DVD")
                 {
-                    pruf = 13;
+                    check = 13;
                 }
                 else if (cat == "Leben & Gesundheit" && form == "Buch")
                 {
-                    pruf = 14;
+                    check = 14;
                 }
                 else if (cat == "Essen & Trinken" && form == "Buch")
                 {
-                    pruf = 15;
+                    check = 15;
                 }
                 else if (cat == "Natur & Garten" && form == "Buch")
                 {
-                    pruf = 16;
+                    check = 16;
                 }
                 else if (cat == "Wirtschaft" && form == "Buch")
                 {
-                    pruf = 17;
+                    check = 17;
                 }
-                hilf = pruf;
-                return hilf;
+                help = check;
+                return help;
 
             }
 
         }
-        public void BuchTabelleAusfuelen(string line)
+        public void FillBookTable(string line)
         {
 
             using (var db = new BookshoppingContext())
@@ -465,264 +532,229 @@ namespace BookShoppingNeu
 
                         }
                         Program pro = new Program();
-                        hilf = pro.CategoryFormathilf(cate, forma);
+                        hilf = pro.CategoryFormatHelp(cate, forma);
                     }
                     if (price != null)
                     {
                         switch (hilf)
                         {
                             case 1:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 0},
-                                    // Format = {FormatId = 3}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 2:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 9},
-                                    // Format = {FormatId = 3}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 3:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 0},
-                                    // Format = {FormatId = 4}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 4:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 9},
-                                    // Format = {FormatId = 4}
-                                    
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 5:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 9},
-                                    // Format = {FormatId = 5}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 6:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 9},
-                                    // Format = {FormatId = 0}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 7:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 0},
-                                    // Format = {FormatId = 1}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 8:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 0},
-                                    // Format = {FormatId = 6}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 9:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 1},
-                                    // Format = {FormatId = 9}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 10:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 0},
-                                    // Format = {FormatId = 1}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 11:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 5},
-                                    // Format = {FormatId = 1}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 12:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 10},
-                                    // Format = {FormatId = 2}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 13:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 11},
-                                    // Format = {FormatId = 2}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 14:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 2},
-                                    // Format = {FormatId = 0}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 15:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 11},
-                                    // Format = {FormatId = 2}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 16:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 8},
-                                    // Format = {FormatId = 0}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
                                 break;
                             case 17:
-                                db.Add(new Buch
+                                db.Add(new Book
                                 {
                                     Author = author,
                                     Title = title,
                                     EAN = ean,
                                     Publisher = publisher,
                                     Date = date,
-                                    Price = price,
-                                    // Katagorie = {KatagorieId = 12},
-                                    // Format = {FormatId = 0}
+                                    Price = price
                                 });
                                 db.SaveChanges();
                                 author = title = ean = publisher = date = price = null;
@@ -733,204 +765,7 @@ namespace BookShoppingNeu
             }
         }
                 
-        public void BuchBibliothekZeigen()
-        {
-            Console.Write("Wählen Sie eine Kategorie aus ?");
-            string kART = KategorieZeigen();
-            Console.Write("Wählen Sie eine Format aus ?");
-            string fART = FormatZeigen();
-
-            using (var db = new BookshoppingContext())
-            {
-                //var buch = db.Buescher
-                //           .Where(b => b.Katagorie.KatagorieId == kID);
-                //var buch = from b in db.Buescher
-                //           where b.Katagorie.KatagorieId == kID && b.Format.FormatId == fID
-                //           select b;
-                //foreach(var s in buch)
-                //{
-
-                //    Console.WriteLine(s);
-
-                //}
-                var buch = from b in db.Buescher
-                           where b.KatagorieArt == kART && b.FormatArt == fART
-                                   select new
-                                   {
-                                       id = b.BuchID,
-                                       auth = b.Author,
-                                       pri = b.Price,
-                                       dat = b.Price,
-                                       pu = b.Publisher,
-                                       tit = b.Publisher,
-
-                                   };
-                foreach (var s in buch)
-                {
-                    Console.WriteLine(s);
-                }
-
-            }
-
-        }
-        public string FormatZeigen()
-        {
-            int antwort;
-          
-
-            using (var db = new BookshoppingContext())
-            {
-               
-                
-                var form = from f in db.Formats
-                            select new
-                            {
-                                Number = f.FormatId,
-                                Format = f.FormatArt
-                            };
-                foreach (var s in form)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine(s.Number + "\t" + s.Format);
-                }
-
-            }
-
-            antwort = Convert.ToInt32(Console.ReadLine());
-
-            using (var db = new BookshoppingContext())
-            {
-                var form = from f in db.Formats
-                          where f.FormatId == antwort
-                          select new
-                          {
-                              fart = f.FormatArt
-                          };
-                foreach (var s in form)
-                {
-                    meinFor = s.fart;
-                }
-
-
-            }
-
-
-            return meinFor;
-        }
-        public string KategorieZeigen()
-        {
-            
-            int antwort = 1;
-            using (var db = new BookshoppingContext())
-            {
-
-                var kat = db.Catags
-                     .OrderBy(b => b.KatagorieId)
-                     .First();
-
-
-                var kateg = from k in db.Catags
-                            select new
-                            {
-                                Number = k.KatagorieId,
-                                Categorie = k.KatagorieArt
-                            };
-                foreach (var s in kateg)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine(s.Number + "\t" + s.Categorie);
-                }
-
-            }
-            antwort = Convert.ToInt32(Console.ReadLine());
-
-            using (var db = new BookshoppingContext())
-            {
-                var kat = from k in db.Catags
-                          where k.KatagorieId == antwort
-                          select new
-                          {
-                              kart = k.KatagorieArt
-                          };
-                foreach (var s in kat)
-                {
-                    meinKat = s.kart;
-                }
-
-
-            }
-
-            return meinKat;
-        }
-       
-        public void BuchKaufen(int Buchnummer, string antwort2)
-        {
-            using (var db = new BookshoppingContext())
-            {
-                var Buch = from b in db.Buescher
-                           where b.BuchID == Buchnummer
-                           select new
-                           {
-                               BuchTitle = b.Title,
-                               BuchPrice = b.Price
-                           };
-
-                foreach(var s in Buch)
-                { if (antwort2 == "k")
-                    {
-                        db.Add(new History
-                        {
-                            BuchKaufen = s.BuchTitle
-                        });
-                        db.SaveChanges();
-                        Console.WriteLine();
-                        Console.WriteLine("Der Buch " + s.BuchTitle + "kostet " + s.BuchPrice + "Wird in deinem Warenkrob hinzufügt " );
-                        Console.Write("Wenn Sie deinen Warenkrob sehen möchten,drücken Sie /wk");
-                        string antwort = Console.ReadLine();
-                        HistoryZeigen(antwort);
-                    } else if (antwort2 == "f")
-                    {
-                        db.Add(new History
-                        {
-                            MoechteKaufen = s.BuchTitle
-
-                        });
-                        db.SaveChanges();
-                        Console.WriteLine();
-                        Console.WriteLine("Der Buch " + s.BuchTitle + "kostet " + s.BuchPrice + "Wird in deiner Wunschliste hinzufügt ");
-                        Console.Write("Wenn Sie deine Wunschliste sehen möchten,drücken Sie /wl");
-                        string antwort = Console.ReadLine();
-                        HistoryZeigen(antwort);
-                    } else
-                    {
-                        Console.WriteLine("Versuchen Sie noch einmal ");
-                        BuchBibliothekZeigen();
-
-                    }
-                    
-                }
-
-            }
-
-        }
-        public void HistoryZeigen(string antwort)
-        {
-            using (var db = new BookshoppingContext())
-            {
-                if (antwort == "wk")
-                {
-                    var Wark = from w in db.Histories
-                               select new
-                               {
-                                   Title = w.BuchKaufen
-                               };
-                    foreach (var s in Wark)
-                    {
-                        Console.WriteLine(s);
-                    }
-                } // hie nur Wuschliste zeigen 
-            }
-        }
+        
         public class DbUpdateException : Exception { }
 
     }
