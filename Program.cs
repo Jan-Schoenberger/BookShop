@@ -669,7 +669,7 @@ namespace BookShoppingNeu
                                 {
                                     // db.Entry<Buch>(b).State = EntityState.Detached;
                                     buch = db.Books.Find(cnt);
-                                    db.Entry<Bookh>(b).State = EntityState.Detached;
+                                    db.Entry<Book>(b).State = EntityState.Detached;
                                 }
 
                                 //KatagorieFormatIDAusfuellen(cate, forma, buch);
