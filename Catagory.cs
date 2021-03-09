@@ -1,11 +1,12 @@
 ﻿namespace BookShoppingNeu
 {
+    
     // Catagorie Entity 
-    public class Catagory
+    public class Katagorie
     {
-
+        [SQLite.Unique]
         public int Id { get; set; }
-        public string CategorieType { get; set; }
+        public string KatagorieArt { get; set; }
         //[ForeignKey("BuchID")]
         //public int BuchID { get; set; }
 
